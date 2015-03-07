@@ -3,7 +3,14 @@ __author__ = 'Jan'
 import dexml
 from dexml import fields
 
-class Skolenie(dexml.Model):
-    nazov = fields.String()
-    priorita = fields.Integer(tagname="priorita")
-    termin = fields.Integer(tagname="termin")
+
+class course(dexml.Model):
+    #nazov = fields.String()
+    nazov = fields.String(tagname="name")
+    priorita = fields.Integer(tagname="priority")
+    termin = fields.Integer(tagname="date")
+
+
+class courses(dexml.Model):
+    skolenie = fields.List(course)
+

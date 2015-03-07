@@ -29,3 +29,31 @@
         </course>
     </courses>
 </application>
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<application>
+    <degree>Bc.</degree>
+    <first_name>Martin</first_name>
+    <last_name>Sustek</last_name>
+    <company>Riesenia</company>
+    <division>pekna</division>
+    <pozition>developer</pozition>
+    <e_mail>sustek@mail.com</e_mail>
+    <phone>0900 111 111</phone>
+    <state>Slovensko</state>
+    <city>Bratislava</city>
+    <postal_code>08001</postal_code>
+    <courses>
+        <course>
+            <name>skolenie1</name>
+            <priority>1</priority>
+            <date>1992-02-01</date>
+        </course>
+        <course>
+            <name>skolenie2</name>
+            <priority>2</priority>
+            <date>1993-02-01</date>
+        </course>
+    </courses>
+</application>
