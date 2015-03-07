@@ -15,6 +15,9 @@ except AttributeError:
     _fromUtf8 = lambda s: s
 
 class Ui_Form(object):
+    def __init__(self):
+        self.xml = 'aa'
+
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
         Form.setFixedSize(726, 636)
@@ -121,6 +124,7 @@ class Ui_Form(object):
         self.lineEdit_8 = QtGui.QLineEdit(self.frame_3)
         self.lineEdit_8.setGeometry(QtCore.QRect(510, 11, 180, 20))
         self.lineEdit_8.setObjectName(_fromUtf8("lineEdit_8"))
+
         self.groupBox = QtGui.QGroupBox(Form)
         self.groupBox.setGeometry(QtCore.QRect(10, 250, 701, 221))
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
@@ -128,9 +132,57 @@ class Ui_Form(object):
         self.scrollArea_2.setGeometry(QtCore.QRect(0, 19, 701, 201))
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName(_fromUtf8("scrollArea_2"))
+
+
+
+        self.pushButton_2 = QtGui.QPushButton(self.scrollArea_2)
+        self.pushButton_2.setGeometry(QtCore.QRect(590, 10, 80, 22))
+        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
+        self.pushButton_2.clicked.connect(self.addWidget)
+
+
+
+
+        self.groupBox_2 = QtGui.QGroupBox(Form)
+        self.groupBox_2.setGeometry(QtCore.QRect(10, 480, 611, 141))
+        self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
+
+        self.scrollArea = QtGui.QScrollArea(self.groupBox_2)
+        self.scrollArea.setGeometry(QtCore.QRect(0, 20, 611, 121))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
+        self.scrollAreaWidgetContents = QtGui.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 609, 119))
+        self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+
+        self.pushButton_4 = QtGui.QPushButton(Form)
+        self.pushButton_4.setGeometry(QtCore.QRect(630, 500, 81, 22))
+        self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
+        self.pushButton_4.clicked.connect(self.validate)
+
+        self.pushButton_5 = QtGui.QPushButton(Form)
+        self.pushButton_5.setGeometry(QtCore.QRect(630, 530, 81, 22))
+        self.pushButton_5.setObjectName(_fromUtf8("pushButton_5"))
+        self.pushButton_5.clicked.connect(self.show)
+
+        self.pushButton = QtGui.QPushButton(Form)
+        self.pushButton.setGeometry(QtCore.QRect(630, 560, 81, 22))
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.pushButton.clicked.connect(self.clear)
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def create_row(self):
+        self.list_scrollAreas=list()
+
+
         self.scrollAreaWidgetContents_3 = QtGui.QWidget()
         self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 699, 199))
         self.scrollAreaWidgetContents_3.setObjectName(_fromUtf8("scrollAreaWidgetContents_3"))
+
+
         self.frame_5 = QtGui.QFrame(self.scrollAreaWidgetContents_3)
         self.frame_5.setGeometry(QtCore.QRect(10, 10, 681, 41))
         self.frame_5.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -148,9 +200,7 @@ class Ui_Form(object):
         self.lineEdit_14 = QtGui.QLineEdit(self.frame_5)
         self.lineEdit_14.setGeometry(QtCore.QRect(460, 10, 121, 22))
         self.lineEdit_14.setObjectName(_fromUtf8("lineEdit_14"))
-        self.pushButton_2 = QtGui.QPushButton(self.frame_5)
-        self.pushButton_2.setGeometry(QtCore.QRect(590, 10, 80, 22))
-        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
+
         self.label_14 = QtGui.QLabel(self.frame_5)
         self.label_14.setGeometry(QtCore.QRect(400, 10, 54, 22))
         self.label_14.setObjectName(_fromUtf8("label_14"))
@@ -158,29 +208,10 @@ class Ui_Form(object):
         self.label_15.setGeometry(QtCore.QRect(290, 10, 57, 22))
         self.label_15.setObjectName(_fromUtf8("label_15"))
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_3)
-        self.groupBox_2 = QtGui.QGroupBox(Form)
-        self.groupBox_2.setGeometry(QtCore.QRect(10, 480, 611, 141))
-        self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
-        self.scrollArea = QtGui.QScrollArea(self.groupBox_2)
-        self.scrollArea.setGeometry(QtCore.QRect(0, 20, 611, 121))
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
-        self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 609, 119))
-        self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.pushButton_4 = QtGui.QPushButton(Form)
-        self.pushButton_4.setGeometry(QtCore.QRect(630, 500, 81, 22))
-        self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
-        self.pushButton_5 = QtGui.QPushButton(Form)
-        self.pushButton_5.setGeometry(QtCore.QRect(630, 530, 81, 22))
-        self.pushButton_5.setObjectName(_fromUtf8("pushButton_5"))
-        self.pushButton = QtGui.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(630, 560, 81, 22))
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.label_13.setText(QtGui.QApplication.translate("Form", "Názov:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_15.setText(QtGui.QApplication.translate("Form", "  Priorita:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_14.setText(QtGui.QApplication.translate("Form", "  Termín:", None, QtGui.QApplication.UnicodeUTF8))
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtGui.QApplication.translate("Form", "Krivý & Šustek - SIVPAVS 2015", None, QtGui.QApplication.UnicodeUTF8))
@@ -196,16 +227,44 @@ class Ui_Form(object):
         self.label_7.setText(QtGui.QApplication.translate("Form", "Štát:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("Form", "  Obec:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("Form", "  PSČ:", None, QtGui.QApplication.UnicodeUTF8))
+
         self.groupBox.setTitle(QtGui.QApplication.translate("Form", "Vybrané školenia", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_13.setText(QtGui.QApplication.translate("Form", "Názov:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_15.setText(QtGui.QApplication.translate("Form", "  Priorita:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_14.setText(QtGui.QApplication.translate("Form", "  Termín:", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_2.setText(QtGui.QApplication.translate("Form", "Pridať", None, QtGui.QApplication.UnicodeUTF8))
+
+
+
+
         self.groupBox_2.setTitle(QtGui.QApplication.translate("Form", "Chybový výstup:", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_4.setText(QtGui.QApplication.translate("Form", "Validovať", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_5.setText(QtGui.QApplication.translate("Form", "Zobraziť", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton.setText(QtGui.QApplication.translate("Form", "Vyčistiť", None, QtGui.QApplication.UnicodeUTF8))
 
+    def addWidget(self):
+        self.create_row()
+
+    def validate(self):
+        print self.xml
+        #titul
+        print self.lineEdit.text()
+        #meno
+        print self.lineEdit_2.text()
+        #priezvysko
+        print self.lineEdit_3.text()
+        #email
+        print self.lineEdit_4.text()
+        #cislo
+        print self.lineEdit_5.text()
+        #stat
+        print self.lineEdit_6.text()
+        #obec
+        print self.lineEdit_7.text()
+
+
+    def show(self):
+        self.groupBox.hide()
+
+    def clear(self):
+        self.groupBox.show()
 
 if __name__ == "__main__":
     import sys
