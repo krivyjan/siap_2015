@@ -21,5 +21,5 @@ class XmlParser():
 
     def transform(self, xml):
         trans = etree.XSLT(self.xslt)
-        return trans(xml)
+        return str(trans(xml))
 

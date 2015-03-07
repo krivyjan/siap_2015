@@ -295,9 +295,12 @@ class Ui_Form(object):
 
 
     def show(self):
-
+        #print ("+ľšťščžčťž").decode("utf-8")
+        #self.outError.insertHtml(('+ľš+ľšščťščžťýáíýáí').decode("utf-8"))
         if self.xml:
             transformation = self.xml_Parser.transform(self.xml)
+            self.outPut.insertHtml(transformation.decode("utf-8"))
+            #print transformation
         else:
             self.outError.insertPlainText("Nezvalidovane xml")
 
