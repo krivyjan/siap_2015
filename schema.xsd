@@ -45,7 +45,7 @@
     </xs:simpleType>
     <xs:simpleType name="Phone">
         <xs:restriction base="xs:string">
-            <xs:pattern value="^(\+421)? 9[0-9]{2} [0-9]{3} [0-9]{3}$"/>
+            <xs:pattern value="(\+421)? 9?\d{2} ?\d{3} ?\d{3}"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="PostalCode">
