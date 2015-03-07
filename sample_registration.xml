@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <person_info>
+        <personal>
+            <degree>Ing.</degree>
+            <first_name>Homer</first_name>
+            <last_name>Simpson</last_name>
+        </personal>
+        <professional>
+            <company>Springfield Nuclear Plant</company>
+            <division>Sector 7-G</division>
+            <position>Safety Engineer</position>
+        </professional>
+        <contact>
+            <e_mail>homerJay@mailme.com</e_mail>
+            <phone>+421 912 345 678</phone>
+        </contact>
+        <locality>
+            <state>Kansas</state>
+            <city>Springfield</city>
+            <postal_code>845 45</postal_code>
+        </locality>
+    </person_info>
+    <courses>
+        <course>
+            <name>Univerzálne Windows aplikácie a spolupráca s Azure</name>
+            <priority>3</priority>
+            <date>3.3.2015</date>
+        </course>
+        <course>
+            <name>Data Warehousing Fundamentals Certification Course</name>
+            <priority>2</priority>
+            <date>10.3.2015</date>
+        </course>
+        <course>
+            <name>Pokročilé webové aplikácie</name>
+            <priority>1</priority>
+            <date>5.3.2015</date>
+        </course>
+    </courses>
+</application>
