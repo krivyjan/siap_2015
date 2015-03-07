@@ -133,39 +133,15 @@ class Ui_Form(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName(_fromUtf8("scrollArea_2"))
 
-        self.scrollAreaWidgetContents_3 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 699, 199))
-        self.scrollAreaWidgetContents_3.setObjectName(_fromUtf8("scrollAreaWidgetContents_3"))
-        self.frame_5 = QtGui.QFrame(self.scrollAreaWidgetContents_3)
-        self.frame_5.setGeometry(QtCore.QRect(10, 10, 681, 41))
-        self.frame_5.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.frame_5.setFrameShadow(QtGui.QFrame.Raised)
-        self.frame_5.setObjectName(_fromUtf8("frame_5"))
-        self.label_13 = QtGui.QLabel(self.frame_5)
-        self.label_13.setGeometry(QtCore.QRect(11, 10, 40, 22))
-        self.label_13.setObjectName(_fromUtf8("label_13"))
-        self.lineEdit_13 = QtGui.QLineEdit(self.frame_5)
-        self.lineEdit_13.setGeometry(QtCore.QRect(57, 10, 231, 22))
-        self.lineEdit_13.setObjectName(_fromUtf8("lineEdit_13"))
-        self.lineEdit_12 = QtGui.QLineEdit(self.frame_5)
-        self.lineEdit_12.setGeometry(QtCore.QRect(350, 10, 51, 22))
-        self.lineEdit_12.setObjectName(_fromUtf8("lineEdit_12"))
-        self.lineEdit_14 = QtGui.QLineEdit(self.frame_5)
-        self.lineEdit_14.setGeometry(QtCore.QRect(460, 10, 121, 22))
-        self.lineEdit_14.setObjectName(_fromUtf8("lineEdit_14"))
 
-        self.pushButton_2 = QtGui.QPushButton(self.scrollAreaWidgetContents_3)
+
+        self.pushButton_2 = QtGui.QPushButton(self.scrollArea_2)
         self.pushButton_2.setGeometry(QtCore.QRect(590, 10, 80, 22))
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         self.pushButton_2.clicked.connect(self.addWidget)
 
-        self.label_14 = QtGui.QLabel(self.frame_5)
-        self.label_14.setGeometry(QtCore.QRect(400, 10, 54, 22))
-        self.label_14.setObjectName(_fromUtf8("label_14"))
-        self.label_15 = QtGui.QLabel(self.frame_5)
-        self.label_15.setGeometry(QtCore.QRect(290, 10, 57, 22))
-        self.label_15.setObjectName(_fromUtf8("label_15"))
-        self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_3)
+
+
 
         self.groupBox_2 = QtGui.QGroupBox(Form)
         self.groupBox_2.setGeometry(QtCore.QRect(10, 480, 611, 141))
@@ -199,7 +175,43 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def create_row(self):
-        pass
+        self.list_scrollAreas=list()
+
+
+        self.scrollAreaWidgetContents_3 = QtGui.QWidget()
+        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 699, 199))
+        self.scrollAreaWidgetContents_3.setObjectName(_fromUtf8("scrollAreaWidgetContents_3"))
+
+
+        self.frame_5 = QtGui.QFrame(self.scrollAreaWidgetContents_3)
+        self.frame_5.setGeometry(QtCore.QRect(10, 10, 681, 41))
+        self.frame_5.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame_5.setObjectName(_fromUtf8("frame_5"))
+        self.label_13 = QtGui.QLabel(self.frame_5)
+        self.label_13.setGeometry(QtCore.QRect(11, 10, 40, 22))
+        self.label_13.setObjectName(_fromUtf8("label_13"))
+        self.lineEdit_13 = QtGui.QLineEdit(self.frame_5)
+        self.lineEdit_13.setGeometry(QtCore.QRect(57, 10, 231, 22))
+        self.lineEdit_13.setObjectName(_fromUtf8("lineEdit_13"))
+        self.lineEdit_12 = QtGui.QLineEdit(self.frame_5)
+        self.lineEdit_12.setGeometry(QtCore.QRect(350, 10, 51, 22))
+        self.lineEdit_12.setObjectName(_fromUtf8("lineEdit_12"))
+        self.lineEdit_14 = QtGui.QLineEdit(self.frame_5)
+        self.lineEdit_14.setGeometry(QtCore.QRect(460, 10, 121, 22))
+        self.lineEdit_14.setObjectName(_fromUtf8("lineEdit_14"))
+
+        self.label_14 = QtGui.QLabel(self.frame_5)
+        self.label_14.setGeometry(QtCore.QRect(400, 10, 54, 22))
+        self.label_14.setObjectName(_fromUtf8("label_14"))
+        self.label_15 = QtGui.QLabel(self.frame_5)
+        self.label_15.setGeometry(QtCore.QRect(290, 10, 57, 22))
+        self.label_15.setObjectName(_fromUtf8("label_15"))
+        self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_3)
+
+        self.label_13.setText(QtGui.QApplication.translate("Form", "Názov:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_15.setText(QtGui.QApplication.translate("Form", "  Priorita:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_14.setText(QtGui.QApplication.translate("Form", "  Termín:", None, QtGui.QApplication.UnicodeUTF8))
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtGui.QApplication.translate("Form", "Krivý & Šustek - SIVPAVS 2015", None, QtGui.QApplication.UnicodeUTF8))
@@ -217,10 +229,10 @@ class Ui_Form(object):
         self.label_9.setText(QtGui.QApplication.translate("Form", "  PSČ:", None, QtGui.QApplication.UnicodeUTF8))
 
         self.groupBox.setTitle(QtGui.QApplication.translate("Form", "Vybrané školenia", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_13.setText(QtGui.QApplication.translate("Form", "Názov:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_15.setText(QtGui.QApplication.translate("Form", "  Priorita:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_14.setText(QtGui.QApplication.translate("Form", "  Termín:", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_2.setText(QtGui.QApplication.translate("Form", "Pridať", None, QtGui.QApplication.UnicodeUTF8))
+
+
+
 
         self.groupBox_2.setTitle(QtGui.QApplication.translate("Form", "Chybový výstup:", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_4.setText(QtGui.QApplication.translate("Form", "Validovať", None, QtGui.QApplication.UnicodeUTF8))
@@ -228,7 +240,7 @@ class Ui_Form(object):
         self.pushButton.setText(QtGui.QApplication.translate("Form", "Vyčistiť", None, QtGui.QApplication.UnicodeUTF8))
 
     def addWidget(self):
-        pass
+        self.create_row()
 
     def validate(self):
         print self.xml
