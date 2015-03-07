@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="Guid">
+    <xs:restriction base="xs:string">
+    <xs:pattern value="\b[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}\b" />
+    <xs:minLength value="36" />
+    <xs:maxLength value="36" />
+    </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Integer">
+    <xs:restriction base="xs:integer">
+    </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StringType">
+    <xs:restriction base="xs:string">
+    <xs:minLength value="0" />
+    <xs:maxLength value="50" />
+    </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="InputDateType">
+    <xs:restriction base="xs:date">
+    </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:element name="DeliveryStatus">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="MessageID" type="Guid" minOccurs="1" />
+                <xs:element name="State" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                <xs:sequence>
+                <xs:element name="Status" type="Integer" minOccurs="1" />
+                <xs:element name="StatusText" type="StringType" minOccurs="1" />
+                <xs:element name="StatusTime" type="InputDateType" minOccurs="0" nillable="true" />
+                </xs:sequence>
+                </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
