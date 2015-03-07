@@ -1,42 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:simpleType name="Guid">
-    <xs:restriction base="xs:string">
-    <xs:pattern value="\b[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}\b" />
-    <xs:minLength value="36" />
-    <xs:maxLength value="36" />
-    </xs:restriction>
+    <xs:simpleType name="Degree">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Bc."/>
+            <xs:enumeration value="Mgr."/>
+            <xs:enumeration value="Mgr. art."/>
+            <xs:enumeration value="Ing."/>
+            <xs:enumeration value="Ing. arch."/>
+            <xs:enumeration value="RNDr."/>
+            <xs:enumeration value="PharmDr."/>
+            <xs:enumeration value="PhDr."/>
+            <xs:enumeration value="JUDr."/>
+            <xs:enumeration value="PaedDr."/>
+            <xs:enumeration value="ThDr."/>
+            <xs:enumeration value="MUDr."/>
+            <xs:enumeration value="MDDr."/>
+            <xs:enumeration value="MVDr."/>
+            <xs:enumeration value="MBA"/>
+            <xs:enumeration value="ThLic."/>
+            <xs:enumeration value="PhD."/>
+            <xs:enumeration value="ArtD."/>
+        </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="Integer">
-    <xs:restriction base="xs:integer">
-    </xs:restriction>
+    <xs:simpleType name="Priority">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:pattern value="[1-3]"/>
+        </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="StringType">
-    <xs:restriction base="xs:string">
-    <xs:minLength value="0" />
-    <xs:maxLength value="50" />
-    </xs:restriction>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="50" />
+        </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="InputDateType">
-    <xs:restriction base="xs:date">
-    </xs:restriction>
+    <xs:simpleType name="DateType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{1,2}(\.)\d{1,2}(\.)\d{4}"></xs:pattern>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Email">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^@]+@[^\.]+\..+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Phone">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^(\+421)? 9[0-9]{2} [0-9]{3} [0-9]{3}$"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PostalCode">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{3}\s?\d{2}"/>
+        </xs:restriction>
     </xs:simpleType>
 
-
-    <xs:element name="DeliveryStatus">
+    <xs:element name="application">
+    <xs:complexType>
+    <xs:sequence>
+        <xs:element name="degree" type="Degree" minOccurs="1" maxOccurs="1" />
+        <xs:element name="first_name" type="StringType" minOccurs="1" maxOccurs="1" />
+        <xs:element name="last_name" type="StringType" minOccurs="1" maxOccurs="1" />
+        <xs:element name="company" type="StringType" minOccurs="1" maxOccurs="1" />
+        <xs:element name="division" type="StringType" minOccurs="1" maxOccurs="1" />
+        <xs:element name="position" type="StringType" minOccurs="1" maxOccurs="1" />
+        <xs:element name="e_mail" type="Email" minOccurs="1" maxOccurs="1" />
+        <xs:element name="phone" type="Phone" minOccurs="1" maxOccurs="1" />
+        <xs:element name="state" type="StringType" minOccurs="1" maxOccurs="1" />
+        <xs:element name="city" type="StringType" minOccurs="1" maxOccurs="1" />
+        <xs:element name="postal_code" type="PostalCode" minOccurs="1" maxOccurs="1" />
+        <xs:element name="courses" minOccurs="1" maxOccurs="1">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="MessageID" type="Guid" minOccurs="1" />
-                <xs:element name="State" minOccurs="1" maxOccurs="1">
+        <xs:sequence>
+            <xs:element name="course" minOccurs="1" maxOccurs="3">
                 <xs:complexType>
                 <xs:sequence>
-                <xs:element name="Status" type="Integer" minOccurs="1" />
-                <xs:element name="StatusText" type="StringType" minOccurs="1" />
-                <xs:element name="StatusTime" type="InputDateType" minOccurs="0" nillable="true" />
+                    <xs:element name="name" type="StringType" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="priority" type="Priority" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="date" type="DateType" minOccurs="1" maxOccurs="1" />
                 </xs:sequence>
                 </xs:complexType>
-                </xs:element>
-            </xs:sequence>
+                <xs:unique name="uniquePriority">
+                    <xs:selector xpath="priority"/>
+                    <xs:field xpath="."/>
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
         </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+    </xs:complexType>
     </xs:element>
 </xs:schema>
