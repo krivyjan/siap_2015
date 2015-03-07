@@ -8,24 +8,32 @@
                 <p>
                     <label>Osobné informácie:</label>
                     <h2>
-                        <xsl:value-of select="application/degree"/>
-                        <xsl:value-of select="application/first_name"/>
+                        <xsl:value-of select="application/degree"/>&#160;
+                        <xsl:value-of select="application/first_name"/>&#160;
                         <xsl:value-of select="application/last_name"/>
                     </h2>
                 </p>
                 <p>
                     <label>Pracovné informácie:</label>
-                    <h4>Firma: <small><xsl:value-of select="application/company"/></small></h4><br/>
-                    <h4>Pobočka: <small><xsl:value-of select="application/division"/></small></h4><br/>
-                    <h4>Pozícia: <small><xsl:value-of select="application/position"/></small></h4>
+                    <h4>
+                        <div>Firma: <small><xsl:value-of select="application/company"/></small></div>
+                        <div>Pobočka: <small><xsl:value-of select="application/division"/></small></div>
+                        <div>Pozícia: <small><xsl:value-of select="application/position"/></small></div>
+                    </h4>
                 </p>
                 <p>
                     <label>Kontaktné informácie:</label>
-                    <h4>E-mail: <small><xsl:value-of select="application/e_mail"/></small></h4><br/>
-                    <h4>Telefónne číslo: <small><xsl:value-of select="application/phone"/></small></h4><br/>
-                    <h4>Adresa: </h4><xsl:value-of select="application/city"/>,
-                     <xsl:value-of select="application/postal_code"/>,
-                     <xsl:value-of select="application/state"/>
+                    <h4>
+                        <div>E-mail: <small><xsl:value-of select="application/e_mail"/></small></div>
+                        <div>Telefónne číslo: <small><xsl:value-of select="application/phone"/></small></div>
+                    </h4>
+                    <h4>
+                        <div>
+                            Adresa: <small><xsl:value-of select="application/city"/>,&#160;
+                            <xsl:value-of select="application/postal_code"/>,&#160;
+                            <xsl:value-of select="application/state"/></small>
+                        </div>
+                    </h4>
                 </p>
             </div>
             <div>
