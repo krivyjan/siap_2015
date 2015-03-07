@@ -1,10 +1,18 @@
 #coding: utf-8
 from PyQt4 import QtCore, QtGui
+from data.registracia import application
+from data.skolenie import courses,course
+import lxml.etree as ET
+from parsers.xmlParser import XmlParser
+from lxml import etree
+
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
     _fromUtf8 = lambda s: s
+
+
 
 class Riadok(QtGui.QWidget):
   def __init__( self, parent=None):
@@ -32,14 +40,14 @@ class Riadok(QtGui.QWidget):
 
 class Ui_Form(object):
     def __init__(self):
-        self.xml = 'aa'
-        self.posun = 0
         self.riadky= list()
+        self.xml = None
+        #self.xml_Parser = XmlParser(xsl_file='./transformation.xslt',xsd_file='./schema.xsd')
 
     def setupUi(self, Form):
         #main form
         Form.setObjectName(_fromUtf8("Form"))
-        Form.setFixedSize(726, 636)
+        Form.setFixedSize(1426, 936)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -195,12 +203,18 @@ class Ui_Form(object):
 
         #chybovy vystup
         self.groupBox_2 = QtGui.QGroupBox(Form)
-        self.groupBox_2.setGeometry(QtCore.QRect(10, 480, 611, 141))
+        self.groupBox_2.setGeometry(QtCore.QRect(10, 480, 611, 441))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("Form", "Chybový výstup:", None, QtGui.QApplication.UnicodeUTF8))
 
         self.scrollArea = QtGui.QScrollArea(self.groupBox_2)
-        self.scrollArea.setGeometry(QtCore.QRect(0, 20, 611, 121))
+        self.scrollArea.setGeometry(QtCore.QRect(0, 20, 611, 441))
         self.scrollArea.setWidgetResizable(True)
+
+        self.outError = QtGui.QTextEdit(self.scrollArea)
+        self.outError.setReadOnly(True)
+        #self.outPut.setLineWrapMode
+        self.outError.setGeometry(QtCore.QRect(0, 0, 611, 2210))
+        self.outError.setLineWrapMode(QtGui.QTextEdit.NoWrap)
         
         self.scrollAreaWidgetContents = QtGui.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 609, 119))
@@ -221,6 +235,21 @@ class Ui_Form(object):
         self.pushButton.setText(QtGui.QApplication.translate("Form", "Vyčistiť", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton.clicked.connect(self.clear)
 
+        self.frame_out = QtGui.QFrame(Form)
+        self.frame_out.setGeometry(QtCore.QRect(730, 10, 701, 910))
+        self.frame_out.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_out.setFrameShadow(QtGui.QFrame.Raised)
+
+        self.label_30 = QtGui.QLabel(self.frame_out)
+        self.label_30.setGeometry(QtCore.QRect(10, 5, 360, 16))
+        self.label_30.setText(QtGui.QApplication.translate("Form", "  Vystup:", None, QtGui.QApplication.UnicodeUTF8))
+
+        self.outPut = QtGui.QTextEdit(self.frame_out)
+        self.outPut.setReadOnly(True)
+        #self.outPut.setLineWrapMode
+        self.outPut.setGeometry(QtCore.QRect(0, 20, 685, 2210))
+        self.outPut.setLineWrapMode(QtGui.QTextEdit.NoWrap)
+
         
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -228,42 +257,70 @@ class Ui_Form(object):
         riadok = Riadok()
         self.riadky.append(riadok)
         self.scrollLayout.addRow(riadok)
+
  
 
     def validate(self):
-        print self.xml
-        #titul
-        print self.lineEdit.text()
-        #meno
-        print self.lineEdit_2.text()
-        #priezvysko
-        print self.lineEdit_3.text()
-        #email
-        print self.lineEdit_4.text()
-        #cislo
-        print self.lineEdit_5.text()
-        #stat
-        print self.lineEdit_6.text()
-        #obec
-        print self.lineEdit_7.text()
-        #psc
-        print self.lineEdit_8.text()
-        #firma
-        print self.lineEdit_18.text()
-        #pobocka
-        print self.lineEdit_19.text()
-        #pozicia
-        print self.lineEdit_20.text()
+
+        registracia = application(
+                          titul = self.lineEdit.text(),
+                          meno = self.lineEdit_2.text(),
+                          priezvysko = self.lineEdit_3.text(),
+                          firma = self.lineEdit_18.text(),
+                          pobocka = self.lineEdit_19.text(),
+                          pozicia = self.lineEdit_20.text(),
+                          email = self.lineEdit_4.text(),
+                          cislo = self.lineEdit_5.text(),
+                          stat = self.lineEdit_6.text(),
+                          obec = self.lineEdit_7.text(),
+                          psc = self.lineEdit_8.text()
+                        )
+        skolenia = courses()
+
 
         for riadok in self.riadky:
-            print riadok.edit_nazov.text()
+            skolenie = course(
+                nazov=riadok.edit_nazov.text(),
+                priorita=riadok.edit_priorita.text(),
+                termin=riadok.edit_termin.text())
+            skolenia.skolenie.append(skolenie)
+
+        registracia.skolenia.append(skolenia)
+        string_xml = registracia.render(encoding="UTF-8")
+
+        #self.xml = etree.fromstring(string_xml)
+        #validation = self.xml_Parser.validate(self.xml)
+        #if validation == True:
+        #    pass
+        #else:
+        #    print validation
 
 
     def show(self):
-        self.groupBox.hide()
+        if self.xml:
+            transformation = self.xml_Parser.transform(self.xml)
+        else:
+            self.outError.insertPlainText("Nezvalidovane xml")
+
 
     def clear(self):
-        self.groupBox.show()
+        for item in self.riadky:
+            item.deleteLater()
+
+        self.riadky = list()
+
+        self.lineEdit_2.clear()
+        self.lineEdit_3.clear()
+        self.lineEdit_18.clear()
+        self.lineEdit_19.clear()
+        self.lineEdit_20.clear()
+        self.lineEdit_4.clear()
+        self.lineEdit_5.clear()
+        self.lineEdit_6.clear()
+        self.lineEdit_7.clear()
+        self.lineEdit_8.clear()
+
+        self.xml=None
 
 
 if __name__ == "__main__":
