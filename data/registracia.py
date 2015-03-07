@@ -11,7 +11,7 @@ class application(dexml.Model):
     priezvysko = fields.String(tagname="last_name")
     firma = fields.String(tagname="company")
     pobocka = fields.String(tagname="division")
-    pozicia = fields.String(tagname="pozition")
+    pozicia = fields.String(tagname="position")
     email = fields.String(tagname="e_mail")
     cislo = fields.String(tagname="phone")
     stat = fields.String(tagname="state")

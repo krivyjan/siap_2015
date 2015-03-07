@@ -42,7 +42,7 @@ class Ui_Form(object):
     def __init__(self):
         self.riadky= list()
         self.xml = None
-        #self.xml_Parser = XmlParser(xsl_file='./transformation.xslt',xsd_file='./schema.xsd')
+        self.xml_Parser = XmlParser(xsl_file='./transformation.xslt',xsd_file='./schema.xsd')
 
     def setupUi(self, Form):
         #main form
@@ -261,7 +261,6 @@ class Ui_Form(object):
  
 
     def validate(self):
-
         registracia = application(
                           titul = self.lineEdit.text(),
                           meno = self.lineEdit_2.text(),
@@ -287,20 +286,23 @@ class Ui_Form(object):
 
         registracia.skolenia.append(skolenia)
         string_xml = registracia.render(encoding="UTF-8")
+        validation = self.xml_Parser.validate(string_xml)
 
-        #self.xml = etree.fromstring(string_xml)
-        #validation = self.xml_Parser.validate(self.xml)
-        #if validation == True:
-        #    pass
-        #else:
-        #    print validation
+        self.xml = etree.fromstring(string_xml)
+        if validation == True:
+            self.outError.insertPlainText('Validacia uspesna \n')
+        else:
+            self.outError.insertPlainText(str(validation) + '\n')
 
 
     def show(self):
+
         if self.xml:
             transformation = self.xml_Parser.transform(self.xml)
         else:
             self.outError.insertPlainText("Nezvalidovane xml")
+
+
 
 
     def clear(self):
