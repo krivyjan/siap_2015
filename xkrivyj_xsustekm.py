@@ -262,24 +262,23 @@ class Ui_Form(object):
 
     def validate(self):
         registracia = application(
-                          titul = self.lineEdit.text(),
-                          meno = self.lineEdit_2.text(),
-                          priezvysko = self.lineEdit_3.text(),
-                          firma = self.lineEdit_18.text(),
-                          pobocka = self.lineEdit_19.text(),
-                          pozicia = self.lineEdit_20.text(),
-                          email = self.lineEdit_4.text(),
-                          cislo = self.lineEdit_5.text(),
-                          stat = self.lineEdit_6.text(),
-                          obec = self.lineEdit_7.text(),
-                          psc = self.lineEdit_8.text()
+                          titul = unicode(self.lineEdit.text()),
+                          meno = unicode(self.lineEdit_2.text()),
+                          priezvysko = unicode(self.lineEdit_3.text()),
+                          firma = unicode(self.lineEdit_18.text()),
+                          pobocka = unicode(self.lineEdit_19.text()),
+                          pozicia = unicode(self.lineEdit_20.text()),
+                          email = unicode(self.lineEdit_4.text()),
+                          cislo = unicode(self.lineEdit_5.text()),
+                          stat = unicode(self.lineEdit_6.text()),
+                          obec = unicode(self.lineEdit_7.text()),
+                          psc = unicode(self.lineEdit_8.text())
                         )
         skolenia = courses()
 
-
         for riadok in self.riadky:
             skolenie = course(
-                nazov=riadok.edit_nazov.text(),
+                nazov=unicode(riadok.edit_nazov.text()),
                 priorita=riadok.edit_priorita.text(),
                 termin=riadok.edit_termin.text())
             skolenia.skolenie.append(skolenie)
