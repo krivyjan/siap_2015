@@ -287,6 +287,7 @@ class Ui_Form(object):
         string_xml = registracia.render(encoding="UTF-8")
         validation = self.xml_Parser.validate(string_xml)
         output_xml = registracia.render(encoding="UTF-8",pretty=True)
+        self.outPut.clear()
         self.outPut.insertPlainText(output_xml.decode("utf-8"))
         self.xml = etree.fromstring(string_xml)
         if validation == True:
