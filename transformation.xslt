@@ -45,15 +45,17 @@ Vybrané školenia: \n
 
 <xsl:for-each select="application/courses/course[priority=1]">
 Priorita: 1\n
-Názov: <xsl:value-of select="name"/> Termín: </small><xsl:value-of select="date"/>\n\n
+Názov: <xsl:value-of select="name"/> Termín: <xsl:value-of select="date"/>\n\n
 </xsl:for-each>
+
 <xsl:for-each select="application/courses/course[priority=2]">
 Priorita: 2\n
-Názov: <xsl:value-of select="name"/> Termín: </small><xsl:value-of select="date"/>\n\n
+Názov: <xsl:value-of select="name"/> Termín: <xsl:value-of select="date"/>\n\n
 </xsl:for-each>
+
 <xsl:for-each select="application/courses/course[priority=3]">
 Priorita: 3\n
-Názov: <xsl:value-of select="name"/> Termín: </small><xsl:value-of select="date"/>\n\n
+Názov: <xsl:value-of select="name"/> Termín: <xsl:value-of select="date"/>\n\n
 </xsl:for-each>
 ----------------------------------------------------------------------------\n
     </xsl:template>
