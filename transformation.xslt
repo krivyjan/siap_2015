@@ -6,37 +6,37 @@
 ===========================================================================
 Osobné informácie:
 ----------------------------------------------------------------------------
-|                                                                          |
-|   Titul: <xsl:value-of select="application/degree"/>                     |
-|   Meno: <xsl:value-of select="application/first_name"/>                  |
-|   Priezvisko: <xsl:value-of select="application/last_name"/>             |
-|                                                                          |
+
+   Titul: <xsl:value-of select="application/degree"/>
+   Meno: <xsl:value-of select="application/first_name"/>
+   Priezvisko: <xsl:value-of select="application/last_name"/>
+
 ----------------------------------------------------------------------------
 
 Pracovné informácie:
 ----------------------------------------------------------------------------
-|                                                                           |
-|   Firma: <xsl:value-of select="application/company"/>                     |
-|   Pobočka: <xsl:value-of select="application/division"/>                  |
-|   Pozícia: <xsl:value-of select="application/position"/>                  |
-|                                                                           |
+
+   Firma: <xsl:value-of select="application/company"/>
+   Pobočka: <xsl:value-of select="application/division"/>
+   Pozícia: <xsl:value-of select="application/position"/>
+
 ----------------------------------------------------------------------------
 
 Kontaktné informácie:
 ----------------------------------------------------------------------------
-|                                                                           |
-|   E-mail: <xsl:value-of select="application/e_mail"/>                     |
-|   Pozícia: <xsl:value-of select="application/phone"/>                     |
-|                                                                           |
+
+   E-mail: <xsl:value-of select="application/e_mail"/>
+   Pozícia: <xsl:value-of select="application/phone"/>
+
 ----------------------------------------------------------------------------
 
 Adresa:
 ----------------------------------------------------------------------------
-|                                                                           |
-|   Štát: <xsl:value-of select="application/state"/>                        |
-|   Obec: <xsl:value-of select="application/city"/>                         |
-|   PSČ: <xsl:value-of select="application/postal_code"/>                   |
-|                                                                           |
+
+   Štát: <xsl:value-of select="application/state"/>
+   Obec: <xsl:value-of select="application/city"/>
+   PSČ: <xsl:value-of select="application/postal_code"/>
+
 ----------------------------------------------------------------------------
 
 Vybrané školenia:
