@@ -1,62 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:output method="text" omit-xml-declaration="yes"/>
     <xsl:template match="/">
-    Záväzná prihláška na školenie
+        Záväzná prihláška na školenie&#xA;&#xA;
 
-===========================================================================
-Osobné informácie:
-----------------------------------------------------------------------------
+        Osobné informácie:&#xA;&#xA;
 
-   Titul: <xsl:value-of select="application/degree"/>
-   Meno: <xsl:value-of select="application/first_name"/>
-   Priezvisko: <xsl:value-of select="application/last_name"/>
+           Titul: <xsl:value-of select="application/degree"/>&#xA;
+           Meno: <xsl:value-of select="application/first_name"/>&#xA;
+           Priezvisko: <xsl:value-of select="application/last_name"/>&#xA;
 
-----------------------------------------------------------------------------
-
-Pracovné informácie:
-----------------------------------------------------------------------------
-
-   Firma: <xsl:value-of select="application/company"/>
-   Pobočka: <xsl:value-of select="application/division"/>
-   Pozícia: <xsl:value-of select="application/position"/>
-
-----------------------------------------------------------------------------
-
-Kontaktné informácie:
-----------------------------------------------------------------------------
-
-   E-mail: <xsl:value-of select="application/e_mail"/>
-   Pozícia: <xsl:value-of select="application/phone"/>
-
-----------------------------------------------------------------------------
-
-Adresa:
-----------------------------------------------------------------------------
-
-   Štát: <xsl:value-of select="application/state"/>
-   Obec: <xsl:value-of select="application/city"/>
-   PSČ: <xsl:value-of select="application/postal_code"/>
-
-----------------------------------------------------------------------------
-
-Vybrané školenia:
-----------------------------------------------------------------------------
+        Pracovné informácie:&#xA;&#xA;
 
 
-<xsl:for-each select="application/courses/course[priority=1]">
-Priorita: 1
-Názov: <xsl:value-of select="name"/> Termín: <xsl:value-of select="date"/>
-</xsl:for-each>
+           Firma: <xsl:value-of select="application/company"/>&#xA;
+           Pobočka: <xsl:value-of select="application/division"/>&#xA;
+           Pozícia: <xsl:value-of select="application/position"/>&#xA;
 
-<xsl:for-each select="application/courses/course[priority=2]">
-Priorita: 2
-Názov: <xsl:value-of select="name"/> Termín: <xsl:value-of select="date"/>
-</xsl:for-each>
+        Kontaktné informácie:&#xA;&#xA;
 
-<xsl:for-each select="application/courses/course[priority=3]">
-Priorita: 3
-Názov: <xsl:value-of select="name"/> Termín: <xsl:value-of select="date"/>
-</xsl:for-each>
-----------------------------------------------------------------------------
+           E-mail: <xsl:value-of select="application/e_mail"/>&#xA;
+           Pozícia: <xsl:value-of select="application/phone"/>&#xA;
+
+        Adresa:&#xA;&#xA;
+
+           Štát: <xsl:value-of select="application/state"/>&#xA;
+           Obec: <xsl:value-of select="application/city"/>&#xA;
+           PSČ: <xsl:value-of select="application/postal_code"/>&#xA;
+
+        Vybrané školenia:&#xA;&#xA;
+
+        <xsl:for-each select="application/courses/course[priority=1]">
+            Priorita: 1&#xA;
+            Názov: <xsl:value-of select="name"/> Termín: <xsl:value-of select="date"/>&#xA;&#xA;
+        </xsl:for-each>
+
+        <xsl:for-each select="application/courses/course[priority=2]">
+            Priorita: 2&#xA;
+            Názov: <xsl:value-of select="name"/> Termín: <xsl:value-of select="date"/>&#xA;&#xA;
+        </xsl:for-each>
+
+        <xsl:for-each select="application/courses/course[priority=3]">
+            Priorita: 3&#xA;
+            Názov: <xsl:value-of select="name"/> Termín: <xsl:value-of select="date"/>&#xA;&#xA;
+        </xsl:for-each>
     </xsl:template>
 </xsl:stylesheet>
