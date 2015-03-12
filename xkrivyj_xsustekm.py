@@ -286,7 +286,8 @@ class Ui_Form(object):
         registracia.skolenia.append(skolenia)
         string_xml = registracia.render(encoding="UTF-8")
         validation = self.xml_Parser.validate(string_xml)
-
+        output_xml = registracia.render(encoding="UTF-8",pretty=True)
+        self.outPut.insertPlainText(output_xml.decode("utf-8"))
         self.xml = etree.fromstring(string_xml)
         if validation == True:
             self.outError.insertPlainText('Validacia uspesna \n')
@@ -299,6 +300,7 @@ class Ui_Form(object):
         #self.outError.insertHtml(('+ľš+ľšščťščžťýáíýáí').decode("utf-8"))
         if self.xml:
             transformation = self.xml_Parser.transform(self.xml)
+            self.outPut.clear()
             self.outPut.insertHtml(transformation.decode("utf-8"))
             #print transformation
         else:
@@ -324,6 +326,7 @@ class Ui_Form(object):
         self.lineEdit_7.clear()
         self.lineEdit_8.clear()
 
+        self.outPut.clear()
         self.xml=None
 
 
