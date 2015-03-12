@@ -28,7 +28,7 @@
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="StringType">
-        <xs:restriction base="xs:string">
+        <xs:restriction base="xs:normalizedString">
             <xs:minLength value="0" />
             <xs:maxLength value="50" />
         </xs:restriction>
