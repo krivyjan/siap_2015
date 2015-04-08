@@ -352,9 +352,13 @@ class Ui_Form(object):
             return
 
         addObj = oXML.AddObject(obj)
-        addObj = oXML.AddObject(obj1)
+        addObj1 = oXML.AddObject(obj1)
 
         if addObj != 0:
+            self.outError.insertPlainText('Chyba pri pridavani objektu do oXML \n')
+            self.outError.insertPlainText(oXML.ErrorMessage)
+
+        if addObj1 != 0:
             self.outError.insertPlainText('Chyba pri pridavani objektu do oXML \n')
             self.outError.insertPlainText(oXML.ErrorMessage)
 
