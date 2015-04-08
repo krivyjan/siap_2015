@@ -22,14 +22,17 @@ class Riadok(QtGui.QWidget):
         self.label_nazov = QtGui.QLabel()
         self.label_nazov.setText(QtGui.QApplication.translate("Form", "  Nazov:", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_nazov = QtGui.QLineEdit()
+        self.edit_nazov.setText('Skolenie')
 
         self.label_priorita = QtGui.QLabel()
         self.label_priorita.setText(QtGui.QApplication.translate("Form", "  Priorita:", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_priorita = QtGui.QLineEdit()
+        self.edit_priorita.setText('1')
 
         self.label_termin = QtGui.QLabel()
         self.label_termin.setText(QtGui.QApplication.translate("Form", "  Termin:", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_termin = QtGui.QLineEdit()
+        self.edit_termin.setText('20.10.2015')
         
         layout = QtGui.QHBoxLayout()
         layout.addWidget(self.label_nazov)
@@ -92,12 +95,15 @@ class Ui_Form(object):
 
         self.lineEdit = QtGui.QLineEdit(self.frame)
         self.lineEdit.setGeometry(QtCore.QRect(47, 11, 167, 20))
+        self.lineEdit.setText('Ing.')
         
         self.lineEdit_2 = QtGui.QLineEdit(self.frame)
         self.lineEdit_2.setGeometry(QtCore.QRect(272, 11, 167, 20))
+        self.lineEdit_2.setText('Jozko')
         
         self.lineEdit_3 = QtGui.QLineEdit(self.frame)
         self.lineEdit_3.setGeometry(QtCore.QRect(523, 11, 167, 20))
+        self.lineEdit_3.setText('Mrkvicka')
         
         #frame firma
         self.frame_6 = QtGui.QFrame(Form)
@@ -119,12 +125,15 @@ class Ui_Form(object):
         
         self.lineEdit_18 = QtGui.QLineEdit(self.frame_6)
         self.lineEdit_18.setGeometry(QtCore.QRect(60, 10, 161, 20))
+        self.lineEdit_18.setText('Firma')
         
         self.lineEdit_19 = QtGui.QLineEdit(self.frame_6)
         self.lineEdit_19.setGeometry(QtCore.QRect(288, 11, 151, 20))
+        self.lineEdit_19.setText('Pobocka')
 
         self.lineEdit_20 = QtGui.QLineEdit(self.frame_6)
         self.lineEdit_20.setGeometry(QtCore.QRect(509, 11, 181, 20))
+        self.lineEdit_20.setText('Pozicia')
 
         #frame email,telefonne cislo
         self.frame_2 = QtGui.QFrame(Form)
@@ -142,9 +151,11 @@ class Ui_Form(object):
     
         self.lineEdit_4 = QtGui.QLineEdit(self.frame_2)
         self.lineEdit_4.setGeometry(QtCore.QRect(58, 11, 281, 22))
+        self.lineEdit_4.setText('mail@mail.com')
 
         self.lineEdit_5 = QtGui.QLineEdit(self.frame_2)
         self.lineEdit_5.setGeometry(QtCore.QRect(457, 10, 231, 22))
+        self.lineEdit_5.setText('+421 911 111 111')
 
         #frame stat,obec psc
         self.frame_3 = QtGui.QFrame(Form)
@@ -158,6 +169,7 @@ class Ui_Form(object):
         
         self.lineEdit_6 = QtGui.QLineEdit(self.frame_3)
         self.lineEdit_6.setGeometry(QtCore.QRect(47, 11, 180, 20))
+        self.lineEdit_6.setText('Stat')
         
         self.label_8 = QtGui.QLabel(self.frame_3)
         self.label_8.setGeometry(QtCore.QRect(233, 11, 44, 16))
@@ -166,6 +178,7 @@ class Ui_Form(object):
         
         self.lineEdit_7 = QtGui.QLineEdit(self.frame_3)
         self.lineEdit_7.setGeometry(QtCore.QRect(283, 11, 179, 20))
+        self.lineEdit_7.setText('Obec')
         
         self.label_9 = QtGui.QLabel(self.frame_3)
         self.label_9.setGeometry(QtCore.QRect(468, 11, 36, 16))
@@ -173,6 +186,7 @@ class Ui_Form(object):
         
         self.lineEdit_8 = QtGui.QLineEdit(self.frame_3)
         self.lineEdit_8.setGeometry(QtCore.QRect(510, 11, 180, 20))
+        self.lineEdit_8.setText('111 11')
         
         # skolenia
         self.groupBox = QtGui.QGroupBox(Form)
