@@ -1,10 +1,12 @@
-#coding: utf-8
+﻿#coding: utf-8
 from PyQt4 import QtCore, QtGui
 from data.registracia import application
 from data.skolenie import courses,course
 import lxml.etree as ET
 from parsers.xmlParser import XmlParser
 from lxml import etree
+import win32com.client
+
 
 
 try:
@@ -42,7 +44,8 @@ class Ui_Form(object):
     def __init__(self):
         self.riadky= list()
         self.xml = None
-        self.xml_Parser = XmlParser(xsl_file='./transformation.xslt',xsd_file='./schema.xsd')
+        self.xml_string = None
+        self.xml_Parser = XmlParser(xsl_file='C:\\siap_2015\\transformation.xslt',xsd_file='C:\\siap_2015\\schema.xsd')
 
     def setupUi(self, Form):
         #main form
@@ -235,6 +238,11 @@ class Ui_Form(object):
         self.pushButton.setText(QtGui.QApplication.translate("Form", "Vyčistiť", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton.clicked.connect(self.clear)
 
+        self.pushButton_3 = QtGui.QPushButton(Form)
+        self.pushButton_3.setGeometry(QtCore.QRect(630, 590, 81, 22))
+        self.pushButton_3.setText(QtGui.QApplication.translate("Form", "Podpisat", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_3.clicked.connect(self.podpis)
+
         self.frame_out = QtGui.QFrame(Form)
         self.frame_out.setGeometry(QtCore.QRect(730, 10, 701, 910))
         self.frame_out.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -291,6 +299,7 @@ class Ui_Form(object):
         self.outPut.insertPlainText(output_xml.decode("utf-8"))
         self.xml = etree.fromstring(string_xml)
         if validation == True:
+            self.xml_string = string_xml
             self.outError.insertPlainText('Validacia uspesna \n')
         else:
             self.outError.insertPlainText(str(validation) + '\n')
@@ -302,7 +311,7 @@ class Ui_Form(object):
         if self.xml:
             transformation = self.xml_Parser.transform(self.xml)
             self.outPut.clear()
-            self.outPut.insertHtml(transformation.decode("utf-8"))
+            self.outPut.insertPlainText(transformation.decode("utf-8"))
             #print transformation
         else:
             self.outError.insertPlainText("Nezvalidovane xml")
@@ -329,6 +338,43 @@ class Ui_Form(object):
 
         self.outPut.clear()
         self.xml=None
+
+    def podpis(self):
+        oXMLPlugin = win32com.client.Dispatch('DSig.XmlPluginAtl')
+        oXML = win32com.client.Dispatch("DSig.XadesSigAtl")
+
+        obj = oXMLPlugin.CreateObject('Id','Registracny formular',self.xml_string.decode(encoding='UTF-8'),self.xml_Parser.string_schema().decode(encoding='UTF-8'),'','http://dis-major/dppo.xsd',self.xml_Parser.string_transformation().decode(encoding='UTF-8'),'http://dis-major/dppo.xsd');
+        obj1 = oXMLPlugin.CreateObject('Id2','Registracny formular2',self.xml_string.decode(encoding='UTF-8'),self.xml_Parser.string_schema().decode(encoding='UTF-8'),'','http://dis-major/dppo.xsd',self.xml_Parser.string_transformation().decode(encoding='UTF-8'),'http://dis-major/dppo.xsd');
+
+        if obj == None:
+            self.outError.insertPlainText('Chyba pri vytvarani objektu oXMLPlugin \n')
+            self.outError.insertPlainText(oXMLPlugin.ErrorMessage)
+            return
+
+        addObj = oXML.AddObject(obj)
+        addObj = oXML.AddObject(obj1)
+
+        if addObj != 0:
+            self.outError.insertPlainText('Chyba pri pridavani objektu do oXML \n')
+            self.outError.insertPlainText(oXML.ErrorMessage)
+
+
+        res = oXML.Sign('signatureId', 'sha256', 'urn:oid:1.3.158.36061701.1.2.1')
+        if res == 0:
+            aaa = oXML.SignedXMLWithEnvelope
+
+            text =  aaa.encode('utf-8','ignore')
+            file = open("Output.xml", "w")
+            file.write(text)
+            file.close()
+
+            self.outPut.clear()
+            self.outPut.insertPlainText(text)
+            self.outError.insertPlainText('Podpis uspesny \n')
+        else:
+            self.outError.insertPlainText('Chyba pro podpise, res nebol 0 \n')
+            self.outError.insertPlainText(oXML.ErrorMessage)
+
 
 
 if __name__ == "__main__":
