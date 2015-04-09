@@ -435,8 +435,12 @@ class Ui_Form(object):
             element = self.podpisane_xml.getElementsByTagName("xades:QualifyingProperties")
             element = element[0]
 
+            unsign_prop = self.podpisane_xml.createElement("xades:UnsignedProperties")
+            element.appendChild(unsign_prop)
+
             unsigned_sig_prop = self.podpisane_xml.createElement("xades:UnsignedSignatureProperties")
-            element.appendChild(unsigned_sig_prop)
+            unsign_prop.appendChild(unsigned_sig_prop)
+
 
             element = self.podpisane_xml.createElement("xades:SignatureTimeStamp")
             element.setAttribute("Id","signatureId")

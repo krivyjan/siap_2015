@@ -53,7 +53,7 @@
 					<ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
 				</ds:Transforms>
 				<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-				<ds:DigestValue>FkYi8hCwgJpFj6THUi9A0eYc4jhtxUojAEd6GlWHAe0=</ds:DigestValue>
+				<ds:DigestValue>ESIKvHjtdpTPRK7bwub2LoA0ll6aJmh8FfwfS0TxweI=</ds:DigestValue>
 			</ds:Reference>
 			<ds:Reference Id="ReferenceManifestId" Type="http://www.w3.org/2000/09/xmldsig#Manifest" URI="#ManifestId">
 				<ds:Transforms>
@@ -84,7 +84,7 @@
 				<ds:DigestValue>fEuUgd1jiRauxSdJM/xdk1j6aAyHXlr3uhHI75U7Vrg=</ds:DigestValue>
 			</ds:Reference>
 		</ds:SignedInfo>
-		<ds:SignatureValue Id="signatureIdSignatureValue">LR0aM40Gh4DqSTnAxlW70T2/d9Mlq9oOt/UU9JJz71JhXNsWztxUOUOcX8lmPX16d/KAVDZOvP9+B4jf8IDJWhkMfA1WtPdDJk7dQ9sNRxqrKntz8RYzJlJ4sPb9kg87lAmUfKEa+MFtfIgMBWe1L7tm60b4F3QrvnTIpld2caF4LkSmPE1lv8E1K0G8d69/AQjFX1mdwBecq3CxeaZbcCH2JpYfuo7JDWBqLPxl24kalFcOeQkyHVUP7TlbkO+in3Djz34fT5ZyJXWsJ7U+FhHwXhDPfyDHMBBMS80g1FqLm5VuFrdnmTg6Dn2kM6TbmmNzcjhjYrw4utc5eCc/fg==</ds:SignatureValue>
+		<ds:SignatureValue Id="signatureIdSignatureValue">p8fw7Pq/Ya9frMcjLQnPmaEYPXL96PbLrEIud28TctIFFp1/kpctpX3cS5s+UJvh69x/97rX56/QW5Kb2ajFYvvyTXX3UxpPm02pZyq4RHPlkQma7kcjpqLq1uzV9Okba4FOwfMLotUNx+hpiimdUj6mR6AfKcCf0jdNIs59u6BNoYytaAiP1aSEFShOfcEkDiGJuNbINHPCqcgrNntbC+AT2GPruW+E8a1B70OYpg2KWhqrsrjHcvep8zigs6fgbKzHPsDsou++1e6GlYHgnFdFlvYcMkyRmr5LtXb0L1brTY94qutqOKWoDvXU11JDYBjCxRJI261kKdWeqPpgwg==</ds:SignatureValue>
 		<ds:KeyInfo Id="signatureIdKeyInfo" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xzep="http://www.ditec.sk/ep/signature_formats/xades_zep/v1.0">
 			<ds:X509Data>
 				<ds:X509Certificate>MIIEeTCCA2GgAwIBAgIKYTON/wAAAAAABjANBgkqhkiG9w0BAQsFADCBpDELMAkGA1UEBhMCU0sxGDAWBgNVBAgTD1Nsb3ZhayBSZXB1YmxpYzETMBEGA1UEBxMKQnJhdGlzbGF2YTETMBEGA1UEChMKRElURUMgQS5TLjEaMBgGA1UECxMRU29mdHdhcmUgRGl2aXNpb24xJDAiBgNVBAsTG0RUQyBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eTEPMA0GA1UEAxMGRFRDIENBMB4XDTEwMTEyMzA5MTMxNVoXDTE1MTEyMzA5MjMxNVowIzEhMB8GA1UEAxMYUG9kcGlzb3ZhdGVsIC0gcG9kYXRlbG5hMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv45kk+GJC+P6hI+lDzFRcxDKJz3U0XG+b0dRkVqHc+O/bePR/yjl7IdY/G8ZMti6YyL2xe6DCpJmfyd51iZVrqhKYEUXndWrYjtl7ltfWOCsTxOToHoZoqFool4hcbABQOka1J9SEEp0ClYs1M1b0hxYSaYs3uQSBiiB7cIs3NajOsVnN5N6/5GrZDkBRU115mQ/pHMN4UUuYzMw2L5ko53T4kSRXFjIC5QmzByT6izUAA9Pzya26UtX8/mcrFgqGHSwB0SfgGn3jkSawzg8+mFKsrDYW8OdFFxsgdls2e00x42IzCs62C1zc04KtCWdvuXxurpyHNiaiogbc17cNwIDAQABo4IBKzCCAScwDgYDVR0PAQH/BAQDAgTwMBMGA1UdJQQMMAoGCCsGAQUFBwMCMB0GA1UdDgQWBBSF5HpNC21pPKJo1XFsA3iOZEBDjTAfBgNVHSMEGDAWgBS8ROqpPyA69WW/XFQ7Z9R4PBcZyDBGBgNVHR8EPzA9MDugOaA3hjVmaWxlOi8vREVWLUNFUlQzLmludHJhLmRpdGVjLnNrL0NlcnRFbnJvbGwvRFRDIENBLmNybDBqBggrBgEFBQcBAQReMFwwWgYIKwYBBQUHMAKGTmZpbGU6Ly9ERVYtQ0VSVDMuaW50cmEuZGl0ZWMuc2svQ2VydEVucm9sbC9ERVYtQ0VSVDMuaW50cmEuZGl0ZWMuc2tfRFRDIENBLmNydDAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQBSbtMUvkSpphbQUbpyncqtRxGNpg9wPVsSO1hpHtH06W73SHJN2qMSHKkTs+IaI9scq/n8w//F02u3M0sGKETFkZ+ShjJt5pz7dVCPKFABmw2rg34+gPbA+jES36sSKkiSwgJ2DlMwnZsm1TuRLk6fJ7GGgo1bxGLeoICnJabBVmijpcGR/RjywA9KN2lPK7cPKrezONPre34Ghge2oFtnYLDCjtG+42s/8+0TYdMGoGkn7jj34/j/HUcWKSPzthwv/j9+KMItdmGHDlNbAjY2TMgSBuold4oG/k946h0o3E/q3qwojETqOCv33yIMTzylOkGmrs5/t45UMFVLwcQG</ds:X509Certificate>
@@ -99,7 +99,7 @@
 			<xades:QualifyingProperties Target="#signatureId" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#">
 				<xades:SignedProperties Id="signatureIdSignedProperties" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" xmlns:xzep="http://www.ditec.sk/ep/signature_formats/xades_zep/v1.0">
 					<xades:SignedSignatureProperties>
-						<xades:SigningTime>2015-04-09T16:26:24+02:00</xades:SigningTime>
+						<xades:SigningTime>2015-04-09T16:40:11+02:00</xades:SigningTime>
 						<xades:SigningCertificate>
 							<xades:Cert>
 								<xades:CertDigest>
