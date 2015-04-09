@@ -439,7 +439,7 @@ class Ui_Form(object):
             element.appendChild(unsigned_sig_prop)
 
             element = self.podpisane_xml.createElement("xades:SignatureTimeStamp")
-            element.setAttribute("id","signatureId10TimeStamp")
+            element.setAttribute("id","signatureId")
             unsigned_sig_prop.appendChild(element)
 
             novy_element = self.podpisane_xml.createElement("xades:EncapsulatedTimeStamp")
