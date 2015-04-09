@@ -6,7 +6,9 @@ import lxml.etree as ET
 from parsers.xmlParser import XmlParser
 from lxml import etree
 import win32com.client
-
+from xml.dom.minidom import parse, parseString
+import httplib,urllib
+import urllib2
 
 
 try:
@@ -48,6 +50,7 @@ class Ui_Form(object):
         self.riadky= list()
         self.xml = None
         self.xml_string = None
+        self.podpisane_xml = None
         self.xml_Parser = XmlParser(xsl_file='C:\\siap_2015\\transformation.xslt',xsd_file='C:\\siap_2015\\schema.xsd')
 
     def setupUi(self, Form):
@@ -257,8 +260,13 @@ class Ui_Form(object):
         self.pushButton_3.setText(QtGui.QApplication.translate("Form", "Podpisat", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_3.clicked.connect(self.podpis)
 
+        self.pushButton_6 = QtGui.QPushButton(Form)
+        self.pushButton_6.setGeometry(QtCore.QRect(630, 620, 81, 22))
+        self.pushButton_6.setText(QtGui.QApplication.translate("Form", "Peciatka", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_6.clicked.connect(self.peciatka)
+
         self.frame_out = QtGui.QFrame(Form)
-        self.frame_out.setGeometry(QtCore.QRect(730, 10, 701, 910))
+        self.frame_out.setGeometry(QtCore.QRect(730, 10, 701, 810))
         self.frame_out.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_out.setFrameShadow(QtGui.QFrame.Raised)
 
@@ -269,7 +277,7 @@ class Ui_Form(object):
         self.outPut = QtGui.QTextEdit(self.frame_out)
         self.outPut.setReadOnly(True)
         #self.outPut.setLineWrapMode
-        self.outPut.setGeometry(QtCore.QRect(0, 20, 685, 2210))
+        self.outPut.setGeometry(QtCore.QRect(0, 20, 685, 810))
         self.outPut.setLineWrapMode(QtGui.QTextEdit.NoWrap)
 
         
@@ -358,7 +366,7 @@ class Ui_Form(object):
         oXML = win32com.client.Dispatch("DSig.XadesSigAtl")
 
         obj = oXMLPlugin.CreateObject('Id','Registracny formular',self.xml_string.decode(encoding='UTF-8'),self.xml_Parser.string_schema().decode(encoding='UTF-8'),'','http://dis-major/dppo.xsd',self.xml_Parser.string_transformation().decode(encoding='UTF-8'),'http://dis-major/dppo.xsd');
-        obj1 = oXMLPlugin.CreateObject('Id2','Registracny formular2',self.xml_string.decode(encoding='UTF-8'),self.xml_Parser.string_schema().decode(encoding='UTF-8'),'','http://dis-major/dppo.xsd',self.xml_Parser.string_transformation().decode(encoding='UTF-8'),'http://dis-major/dppo.xsd');
+        #obj1 = oXMLPlugin.CreateObject('Id2','Registracny formular2',self.xml_string.decode(encoding='UTF-8'),self.xml_Parser.string_schema().decode(encoding='UTF-8'),'','http://dis-major/dppo.xsd',self.xml_Parser.string_transformation().decode(encoding='UTF-8'),'http://dis-major/dppo.xsd');
 
         if obj == None:
             self.outError.insertPlainText('Chyba pri vytvarani objektu oXMLPlugin \n')
@@ -366,32 +374,98 @@ class Ui_Form(object):
             return
 
         addObj = oXML.AddObject(obj)
-        addObj1 = oXML.AddObject(obj1)
+        #addObj1 = oXML.AddObject(obj1)
 
         if addObj != 0:
             self.outError.insertPlainText('Chyba pri pridavani objektu do oXML \n')
             self.outError.insertPlainText(oXML.ErrorMessage)
 
-        if addObj1 != 0:
-            self.outError.insertPlainText('Chyba pri pridavani objektu do oXML \n')
-            self.outError.insertPlainText(oXML.ErrorMessage)
+        #if addObj1 != 0:
+            #self.outError.insertPlainText('Chyba pri pridavani objektu do oXML \n')
+            #self.outError.insertPlainText(oXML.ErrorMessage)
 
 
         res = oXML.Sign('signatureId', 'sha256', 'urn:oid:1.3.158.36061701.1.2.1')
         if res == 0:
             aaa = oXML.SignedXMLWithEnvelope
 
+            self.outError.setPlainText(str(type(aaa)))
             text =  aaa.encode('utf-8','ignore')
+
+            self.podpisane_xml = parseString(text)
+            text =  self.podpisane_xml.toprettyxml().encode('utf-8','ignore')
             file = open("Output.xml", "w")
             file.write(text)
             file.close()
 
             self.outPut.clear()
-            self.outPut.insertPlainText(text)
+            self.outPut.insertPlainText(self.podpisane_xml.toprettyxml().encode('utf-8','ignore'))
             self.outError.insertPlainText('Podpis uspesny \n')
         else:
             self.outError.insertPlainText('Chyba pro podpise, res nebol 0 \n')
             self.outError.insertPlainText(oXML.ErrorMessage)
+
+    def peciatka(self):
+        #ds:SignatureValue
+        if self.podpisane_xml:
+            value = self.podpisane_xml.getElementsByTagName('ds:SignatureValue')
+            for item in value:
+                sigValue  = item.firstChild.nodeValue
+                self.outPut.setPlainText(sigValue)
+
+            xmlDopyt = "<?xml version=\"1.0\" encoding=\"utf-8\"?> <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"\
+                + "<soap:Body>"\
+                + " <GetTimestamp xmlns=\"http://www.ditec.sk/\"> "\
+                + "    <dataB64>"\
+                + sigValue\
+                + "</dataB64> "\
+                + " </GetTimestamp> " + " </soap:Body> " + "</soap:Envelope>"
+
+            headers = {"Host": "test.ditec.sk","Content-type": "text/xml; charset=utf-8", "Content-Length": len(xmlDopyt),"SOAPAction": "http://www.ditec.sk/GetTimestamp"}
+            req = urllib2.Request(url="http://test.ditec.sk/timestampws/TS.asmx",data=xmlDopyt,
+                      headers=headers)
+
+            response = urllib2.urlopen(req).read()
+            #print type(aa)
+
+            response_xml = parseString(response)
+            timestamp_result = response_xml.getElementsByTagName("GetTimestampResult")
+            timestamp_result = timestamp_result[0].firstChild.nodeValue
+
+            element = self.podpisane_xml.getElementsByTagName("xades:QualifyingProperties")
+            element = element[0]
+
+            unsigned_sig_prop = self.podpisane_xml.createElement("xades:UnsignedSignatureProperties")
+            element.appendChild(unsigned_sig_prop)
+
+            element = self.podpisane_xml.createElement("xades:SignatureTimeStamp")
+            element.setAttribute("id","signatureId10TimeStamp")
+            unsigned_sig_prop.appendChild(element)
+
+            novy_element = self.podpisane_xml.createElement("xades:EncapsulatedTimeStamp")
+
+
+            novy_element.appendChild(self.podpisane_xml.createTextNode(timestamp_result))
+            element.appendChild(novy_element)
+
+            text =  self.podpisane_xml.toprettyxml().encode('utf-8','ignore')
+            file = open("Output_signed.xml", "w")
+            file.write(text)
+            file.close()
+
+            self.outError.insertPlainText('Peciatka uspesna')
+            self.outPut.clear()
+            self.outPut.insertPlainText(text)
+        else:
+            self.outError.insertPlainText('Dokument este nebol podpisany \n')
+
+
+
+
+
+
+
+
 
 
 
