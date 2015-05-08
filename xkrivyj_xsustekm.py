@@ -9,6 +9,8 @@ import win32com.client
 from xml.dom.minidom import parse, parseString
 import httplib,urllib
 import urllib2
+from base64 import b64decode
+from subprocess import check_output
 
 
 try:
@@ -427,11 +429,17 @@ class Ui_Form(object):
 
             response = urllib2.urlopen(req).read()
             #print type(aa)
+            #print response
+            #print b64decode(response)
+            #print type(b64decode(response))
 
             response_xml = parseString(response)
             timestamp_result = response_xml.getElementsByTagName("GetTimestampResult")
             timestamp_result = timestamp_result[0].firstChild.nodeValue
+            print timestamp_result
 
+            command = "java -jar TimestampFactory.jar " + str(timestamp_result)
+            new_timestamp = check_output(command, shell=True)
             element = self.podpisane_xml.getElementsByTagName("xades:QualifyingProperties")
             element = element[0]
 
@@ -449,7 +457,7 @@ class Ui_Form(object):
             novy_element = self.podpisane_xml.createElement("xades:EncapsulatedTimeStamp")
 
 
-            novy_element.appendChild(self.podpisane_xml.createTextNode(timestamp_result))
+            novy_element.appendChild(self.podpisane_xml.createTextNode(new_timestamp))
             element.appendChild(novy_element)
 
             text =  self.podpisane_xml.toprettyxml().encode('utf-8','ignore')

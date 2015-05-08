@@ -1,51 +1,27 @@
 #encoding: utf-8
 __author__ = 'Ján Krivý'
 
-#import execjs
-import win32com.client
-
-#from test_data import Data
-from test_data2 import Data
-data = Data()
-oXMLPlugin = win32com.client.Dispatch('DSig.XmlPluginAtl')
-oXML = win32com.client.Dispatch("DSig.XadesSigAtl")
+import py4j
+from py4j.java_gateway import JavaGateway
 
 
-#print oXMLPlugin
-#print oXML
-#print data.xml[830:839]
-#print data.xml.decode(encoding='UTF-8')
-#('objectId', 'Daòové priznanie', xml, xsd, '', xsdURI, xsl, xslURI);
-obj = oXMLPlugin.CreateObject('objectId','Danove priznanie',data.xml.decode(encoding='UTF-8'),data.schema.decode(encoding='UTF-8'),'','http://dis-major/dppo.xsd',data.transformation.decode(encoding='UTF-8'),'http://dis-major/dppo.xslt');
-#a = execjs.eval("var oXMLPlugin = new ActiveXObject('DSig.XmlPluginAtl');")
-addObj = oXML.AddObject(obj)
-# print addObj
+from subprocess import check_output
+kokotinec = "MIIIGjADAgEAMIIIEQYJKoZIhvcNAQcCoIIIAjCCB/4CAQMxDzANBglghkgBZQMEAgEFADCBtwYLKoZIhvcNAQkQAQSggacEgaQwgaECAQEGDSsGAQQBgbhIAQEyAwAwMTANBglghkgBZQMEAgEFAAQg1I49PX8lEmJLKPwFghvouVaPjGbVy/2YI7xNwhgOK/0CAmmuGBMyMDE1MDUwNzExMDMyMi4xNjVaMASAAgHCoDukOTA3MQswCQYDVQQGEwJTSzEUMBIGA1UECgwLRGl0ZWMsIGEucy4xEjAQBgNVBAMMCVRTIFNpZ25lcqCCBNowggTWMIIDvqADAgECAgg4hJ4iaKgQ0TANBgkqhkiG9w0BAQsFADA1MQswCQYDVQQGEwJTSzEUMBIGA1UECgwLRGl0ZWMsIGEucy4xEDAOBgNVBAMMB0RUQyBUU0EwHhcNMTEwMzA5MTI1OTMxWhcNMzEwMTA5MTI1OTMxWjA3MQswCQYDVQQGEwJTSzEUMBIGA1UECgwLRGl0ZWMsIGEucy4xEjAQBgNVBAMMCVRTIFNpZ25lcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJT5b78mgJPJr7UWLpKNgoWrjwR9gpdjT7Z2yTUcD5ZWRIjfKurN1Fy0SB4F5ED3P1FdHFmRzfXAI590i5Doz1XyoRjstYDouXKfTZ5YHbbpifzH3hbnz4XHDxy/EFH6TyTxO+QgjEhusHq5+1yJaefa4IvE9g5MA4lEeLtA8FmSuQpmRT/oS1vETrRT3WWI5+EgOr8d6U1xfTFG1mVcXrtuNYj1kVTtardfrfZ7HrPJYdwW5Vdlds0DwJgFoJjIi6I6nTtsN0+7ilreiioQaiTCLfD/JvGe+hfynbCKVn0REy7M6+PXeP+552j6l469WPXP+W/VJgQ28NDVXsxF9FsCAwEAAaOCAeYwggHiMB0GA1UdDgQWBBTEJtrRA11IsdZh6evJR+Or12Ky2DAfBgNVHSMEGDAWgBTIMYpHRpQp7fm9n/PFHIEcxeBuozCBoQYDVR0gBIGZMIGWMIGCBg0rBgEEAYG4SAEBCgMBMHEwbwYIKwYBBQUHAgIwYxphVGVudG8gY2VydGlmaWthdCBqZSB2eWRhbnkgYWtvIHRlc3RvdmFjaSBjZXJ0aWZpa2F0IHByZSB2eXZvaiBhcGxpa2FjaWkgdiBzcG9sb2Nub3N0aSBEaXRlYywgYS5zLjAPBg0rgR6RmYQFAAAAAQICMEAGA1UdHwQ5MDcwNaAzoDGGL2h0dHA6Ly9ERVYtUEFWTElLL0RhdGEvRFRDIFRTQS9DcmxzL0RUQyBUU0EuY3JsMIGUBggrBgEFBQcBAQSBhzCBhDA2BggrBgEFBQcwAoYqaHR0cDovL0RFVi1QQVZMSUsvRGF0YS9EVEMgVFNBL0RUQyBUU0EuY2VyMEoGCCsGAQUFBzABhj5odHRwOi8vREVWLVBBVkxJSy9DZXJ0R2VuL09jc3AuYXNweD91c2VyPXBhdmxpayZjYW5hbWU9RFRDIFRTQTALBgNVHQ8EBAMCAMAwFgYDVR0lAQH/BAwwCgYIKwYBBQUHAwgwDQYJKoZIhvcNAQELBQADggEBAEpEKH+8enmtNm7buMxITcL/RilL2a+TpODCKx7mQLqNKSEEkwi9a/yptWOhsRQ7aPg2AjZxmT0hBgsZVDZ7ZVCLfs/31YnGn7O/btKoqKD9m1kXaKNHUzJdo5w84pDBNe2OZPYQu7S6DS1qv/OQGfIN/LHkw+MZLMxV+WH3ureNKtGxZ5S7zRs/vyYVkmrcgnTARy7cOT0MVwZqPXcCNk3s7iyZpd0Dw+Uv2x+Uj+98JXfLJWkT1uhM5wQlXMGOcLMj2J2oCCp+7am1Yw1pZUxYx4JafTGVtoR8XFlAYh6iIUYLDAaaYylvy8ZTzqEjhBuvjk4M2sCwAah6+DrtlSkxggJOMIICSgIBATBBMDUxCzAJBgNVBAYTAlNLMRQwEgYDVQQKDAtEaXRlYywgYS5zLjEQMA4GA1UEAwwHRFRDIFRTQQIIOISeImioENEwDQYJYIZIAWUDBAIBBQCggd8wGgYJKoZIhvcNAQkDMQ0GCyqGSIb3DQEJEAEEMBwGCSqGSIb3DQEJBTEPFw0xNTA1MDcxMTAzMjFaMC8GCSqGSIb3DQEJBDEiBCDcWY6oq8Z451Q1+CyqiKH9hXs7NO/lehi0WWDb6rD0eTByBgsqhkiG9w0BCRACDDFjMGEwXzBdBBRD3uxDabGjg94OhGHePjDozPU59jBFMDmkNzA1MQswCQYDVQQGEwJTSzEUMBIGA1UECgwLRGl0ZWMsIGEucy4xEDAOBgNVBAMMB0RUQyBUU0ECCDiEniJoqBDRMA0GCSqGSIb3DQEBCwUABIIBAAV7+gz8R1sBrdHUzdS7xPDz/Mx7wqBNqjuXJSEyCoKdjaxuGKdvusHGOvpUt3w/5gtEgjsb6A0mKF7pjEwN0D+YrmJFwlT4LmvsV4FObQGQUhLo8dE31Ii6BMpsArXZn7GoOL1l0U5RCvTK3wY035ebbEjxTKNrSh6VEDnfvfL8X8a0NnaktO7ktdYnCiD4sA2IIMlZMBopRAuE4eqDMtsrvLe5H5tuNgUDH4GSGkkw0+9pAy49SmZyPt6ysOsAsbjYs2N6UIxwVVUdH4x/oHKeEVvFY8e9GutbdmegYKvzLJsACkthX6vflA3XT9sPEjBKpWv/He+MhDZIvlluk2M="
+command = "java -jar TimestampFactory.jar " + kokotinec
+a = check_output(command, shell=True)
+print a
+print type(a)
 
-res = oXML.Sign('signatureId', 'sha256', 'urn:oid:1.3.158.36061701.1.2.1')
-#print res
-#print '---------------------------------------'
-aaa = oXML.SignedXMLWithEnvelope
-#print type(aaa)
-text =  aaa.encode('utf-8','ignore')
-file = open("Output.xml", "w")
-file.write(text)
-file.close()
-'''
-ctx = execjs.compile("""
-     function add(x, y) {
-         var oXMLPlugin = new ActiveXObject('C:\Ditec\DSigXades\Ditec.Zep.DSigXades.XmlPluginAtl.dll')
-         //var oXMLPlugin = new ActiveXObject('DSig.XmlPluginAl');
-         var daco = new Array();
-         return x + y;
-
-     }
- """)
-
-#Ditec.Zep.DSigXades.XmlPluginAtl.dll
-#C:\Ditec\DSigXades
-print ctx.call("add", 1, 2)
-'''
-#jscript = execjs.get("var oXMLPlugin = new ActiveXObject('DSig.XmlPluginAtl');")
-#print jscript.eval("1+1")
+#gateway = JavaGateway()
+#java_object = gateway.jvm.default.TimeStampFactory()  # invoke constructor
+#other_object = java_object.doThat()
+#other_object.doThis(1,'abc')
 
 
+#from py4j.java_gateway import JavaGateway
+#from py4j.java_gateway import java_import
+#gateway = JavaGateway()
+#jList1 = gateway.jvm.java.util.ArrayList()
+#java_import(gateway.jvm,'java.util.*')
+#jList2 = gateway.jvm.ArrayList()
+#gateway.jvm.java.lang.String("a")
