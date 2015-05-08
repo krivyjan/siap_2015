@@ -1,0 +1,104 @@
+Ciel: Prejst examples, ktore su v priecinku Priklady a identifikovat zle a dobre.
+Pre tie, ktore nie su validne vypisat aj co je v nich zle.
+Je jedno, ci to bude command-line skript alebo GUI appka.
+Uplne staci sa pri nevalidnom dokumente odkazat sa na jeden z bodov v manuale o postupnosti krokov.
+
+DEREFERENCOVANIE URI = najdem kam URI ukazuje, vezmem element, kanonikalizujem, vypocitam hash a porovnam hash s digestValue. Ak sa nerovnaju, je porusena integrita
+
+PODPISOVANIE = signedInfo => C14N => SHA256 => RSA with PK
+    t.j. element s referenciami na cely dokument kanonikalizujem, zahashujem a symetricky zasifrujem
+
+=================
+
+1. OVERENIE DATOVEJ OBALKY:
+
+overit, ci korenovy element obsahuje namespaces a ci obsahuje hodnoty namespaces podla profilu
+musi byt key aj value
+
+-------
+
+2. OVERENIE XML SIGNATURE
+
+Kontrola toho, ci obsahuje povinne elementy, ci sa tieto nachadzaju na spravnom mieste a maju spravne hodnoty.
+
+<DataEnvelope>
+    <object1>
+    <object2>
+    <signature>
+        <signedInfo> // TO, co sa podpisuje
+            <referencia1 URI="#cokolvek_dalsie"> // mriezka musi byt, to zabezpeci, ze je to referencia v ramci
+                                                // lokalneho XML
+                                               // cokolvek_dalsie musi byt potom ID elementu v dokumente
+            </referencia1>
+            <referencia2 URI="#xxx">
+
+                <transformacie>
+                    <transform> // napr. C14N (kanonikalizacia)
+                        <digestMethod> // hashovacia metoda
+                        <digestValue> // vystup z hashovacej metody
+                </transformacie>
+
+            </referencia2>
+            <signatureValue> // Vysledok podpisu
+            </signatureValue>
+    .
+    .
+    .
+
+    <ds:keyInfo>
+        <X509CERTDATA> Kompletny certifikat vratane verejneho kluca </X509CERTDATA>
+    </ds:keyInfo>
+
+    <element1 ID="xxx">
+
+    </element1>
+
+------
+
+3. OVERENIE CASOVEJ PECIATKY
+
+------
+
+4. OVERENIE PLATNOSTI PODPISOVEHO CERITFIKATU
+
+- Vytiahneme si TimestampToken, z neho vytiahneme datum a cas v casovej peciatke
+- certifikat v keyInfo obsahuje platnost OD a DO. Platost z casovej peciatky musi patrit do intervalu
+- Certifikat, casovu peciatku atd. je mozne parsovat pomocou kniznice bcCrypto cez entitu X509Certificate
+- 1 riadok CRL obsahuje SN - serial_number a R - revocation_reason
+- funkcna linka na CRLko: http://test.monex.sk/DTCCACrl/DTCCACrl.crl
+- zaznamy z CRLka opat parsujem pomocou bcCrypto
+
+- vytiahnem TimeStampToken, z neho ziskam podpisovy certifikat a mam k dispozicii vsetko co potrebujem na overenie
+
+- overenie message imprintu - pre 3. zadanie sa robilo na strane webovej sluzby.
+
+KOD => [SignatureValue] => WebService => [TimeStampRequest] => TimeStampAuthority
+                    [TimeStampResponse]   <=
+
+- RFC 3161
+- TimeStampRequest pozostava zo zapisu v ASN1
+- message imprint obsahuje to hashovaci algoritmus a samotnu hodnotu hashu
+
+<TimeStampRequest>
+    <MessageImprint>
+        <HashAlgorithm> // SHA256
+        <HashValue> // DigestValue
+
+
+- overenie: pozriem moje timestamptoken, pouzijem bcCrypto, zistim aky hash algorithm je v messageImprint a vypocitam si hash zo signatureValue. Hashe musia byt identicke. Inak ta peciatka patri k inemu dokumentu a podpis nemozem akceptovat.
+
+--------
+
+Format peciatky:
+
+<TimeStampResponse>
+    <TimeStampToken>
+        <GenTime>
+        </GenTime>
+        <Certificate>
+        </Certificate>
+        <Signature>
+        </Signature>
+        .
+        .
+        .
