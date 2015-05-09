@@ -1,11 +1,14 @@
 
 1.1) Korenovy element = xzep:DataEnvelope
 1.2) Obsahuje atributy xmlns:xzep & xmlns:ds
-1.3) Obsahuje podelement ds:Signature
-1.4) xmlns:xzep="http://www.ditec.sk/ep/signature_formats/xades_zep/v1.0"
-1.5) xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+1.3) Obsahuje podelement ds:Signature, ktory ma atributy Id & xmlns:ds
+1.4) ds:Signature ma neprazdny podelement ds:SignatureValue a ten ma atribut Id
+1.5) xmlns:xzep="http://www.ditec.sk/ep/signature_formats/xades_zep/v1.0"
+1.6) xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
 
-2.1) XML obsahuje elementy ds:SignatureMethod & ds:CanonicalizationMethod a tie su podelementami
+=============================
+
+2.1) XML obsahuje elementy ds:SignatureMethod & ds:CanonicalizationMethod, ktore su podelementami
     ds:Signature => ds:SignedInfo
     2.1.1) Maju atribut Algorithm a ten obsahuje validnu URI
     2.1.2) Validne URIs pre SignatureMethod:
@@ -17,10 +20,7 @@
     2.1.3) Validne URIs pre CanonicalizationMethod:
         -  http://www.w3.org/TR/2001/REC-xml-c14n-20010315
 
-        2.2.1.1) element ds:Signature ma atribut id
-        2.2.1.2) element ds:Signature ma specifikovany namespace xmlns:ds
-    2.2.2) element ds:SignatureValue ma atribut id
-    2.2.3) foreach ds:Reference in ds:SignedInfo
+=============================
 
 2.3) foreach ds:Reference in ds:SignedInfo
     2.3.1) Maju podelementy ds:Transforms & ds:DigestMethod
@@ -28,12 +28,19 @@
     2.3.3) ds:Transform ma atribut Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"
     2.3.4) ds:DigestMethod ma atribut Algorithm a jeho hodnota je niektora z validnych URIs pre SignatureMethod
         2.3.5.1) Ak URI zacina s "#", overit, ze element existuje v XML, inak ziskat jeho hodnotu a validovat, ze je to XML
+        2.3.5.2) Element, na ktory ukazuje URI moze byt:
+            - 1x ds:KeyInfo - REQUIRED
+            - 1x ds:SignatureProperties - REQUIRED
+            - 1x xades:SignedProperties - REQUIRED
+            - Nx element typu ds:Manifest
+            - inak FAIL
         2.3.5.2) Kanonikalizacia elementu pomocou bcCrypto
         2.3.5.3) Zahashovanie kanonikalizovanej formy pomocou algoritmu v ds:DigestMethod - bcCrypto
         2.3.5.4) Vysledok hashovania == ds:DigestValue - inak FAIL
 
-        2.3.6.1) ds:Signature ma neprazdny podelement ds:SignatureValue
-        2.3.6.2) Kanonikalizacia elementu ds:SignedInfo pomocou bcCrypto
-        2.3.6.3) Z ds:KeyInfo => ds:X509Data => ds:X509Certificate pomocou bcCrypto ziskam PublicKey certifikatu
-        2.3.6.4) Pomocou PublicKey zakodujem RSAckom kanonikalizovanu formu ds:SignedInfo
-        2.3.6.5) Vysledok == hodnotoa v ds:SignatureValue - inak FAIL
+=============================
+
+2.4.2) Kanonikalizacia elementu ds:SignedInfo pomocou bcCrypto
+2.4.3) Z ds:KeyInfo => ds:X509Data => ds:X509Certificate pomocou bcCrypto ziskam PublicKey certifikatu
+2.4.4) Pomocou PublicKey zakodujem RSAckom kanonikalizovanu formu ds:SignedInfo
+2.4.5) Vysledok == hodnota v ds:SignatureValue - inak FAIL
