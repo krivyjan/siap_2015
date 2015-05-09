@@ -11,6 +11,7 @@ import httplib,urllib
 import urllib2
 from base64 import b64decode
 from subprocess import check_output
+import uuid
 
 
 try:
@@ -428,10 +429,6 @@ class Ui_Form(object):
                       headers=headers)
 
             response = urllib2.urlopen(req).read()
-            #print type(aa)
-            #print response
-            #print b64decode(response)
-            #print type(b64decode(response))
 
             response_xml = parseString(response)
             timestamp_result = response_xml.getElementsByTagName("GetTimestampResult")
@@ -440,6 +437,9 @@ class Ui_Form(object):
 
             command = "java -jar TimestampFactory.jar " + str(timestamp_result)
             new_timestamp = check_output(command, shell=True)
+            print timestamp_result
+            print timestamp_result[-1]
+            print timestamp_result[-2]
             element = self.podpisane_xml.getElementsByTagName("xades:QualifyingProperties")
             element = element[0]
 
@@ -449,9 +449,10 @@ class Ui_Form(object):
             unsigned_sig_prop = self.podpisane_xml.createElement("xades:UnsignedSignatureProperties")
             unsign_prop.appendChild(unsigned_sig_prop)
 
-
+            id = uuid.uuid4()
+            id = str(id)
             element = self.podpisane_xml.createElement("xades:SignatureTimeStamp")
-            element.setAttribute("Id","signatureId")
+            element.setAttribute("Id",id)
             unsigned_sig_prop.appendChild(element)
 
             novy_element = self.podpisane_xml.createElement("xades:EncapsulatedTimeStamp")
@@ -461,7 +462,10 @@ class Ui_Form(object):
             element.appendChild(novy_element)
 
             text =  self.podpisane_xml.toprettyxml().encode('utf-8','ignore')
+            #text2 = self.podpisane_xml.encode('utf-8')
             file = open("Output_signed.xml", "w")
+            print self.podpisane_xml.toxml()
+            print type(self.podpisane_xml)
             file.write(text)
             file.close()
 
