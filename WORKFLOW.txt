@@ -41,8 +41,8 @@
         - 1x xades:SignedProperties - REQUIRED
         - Nx element typu ds:Manifest
         - inak FAIL
-    2.3.5.2) Kanonikalizacia elementu pomocou bcCrypto
-    2.3.5.3) Zahashovanie kanonikalizovanej formy pomocou algoritmu v ds:DigestMethod - bcCrypto
+    2.3.5.2) Kanonikalizacia elementu
+    2.3.5.3) Zahashovanie kanonikalizovanej formy pomocou algoritmu v ds:DigestMethod
     2.3.5.4) Vysledok hashovania == ds:DigestValue - inak FAIL
 
 =============================
@@ -64,7 +64,7 @@
         - IssuerCertificate
         - SubjectName
     2.4.4.2) Hodnoty elementov porovnam s ds:X509IssuerSerial & ds:X509SubjectName
-2.4.5) Kanonikalizacia elementu ds:SignedInfo a zahashovanie algoritmom z ds:DigestMethod pomocou bcCrypto
+2.4.5) Kanonikalizacia elementu ds:SignedInfo a zahashovanie algoritmom z ds:DigestMethod
 2.4.6) Z ds:KeyInfo => ds:X509Data => ds:X509Certificate pomocou bcCrypto ziskam PublicKey certifikatu
 2.4.7) Pomocou PublicKey zakodujem RSAckom zahashovanu formu ds:SignedInfo
 2.4.8) Vysledok == hodnota v ds:SignatureValue - inak FAIL
