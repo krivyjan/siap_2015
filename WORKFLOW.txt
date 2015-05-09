@@ -65,3 +65,10 @@
 =============================
 
 2.5) foreach ds:Manifest in LAST ds:Object in ds:Signature
+    2.5.1) ma atribut Id
+    2.5.2) ma prave 1 podelement ds:Reference
+        2.5.2.1) ma atribut URI, ktory je odkazom na element s nazvom ds:Object v ramci dokumentu
+        2.5.2.2) ma podelementy ds:Transforms & ds:DigestMethod
+        2.5.2.3) ds:Transforms ma podelement ds:Transform
+        2.5.2.4) ds:Transform ma atribut Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"
+        2.5.2.5) ds:DigestMethod ma atribut Algorithm a jeho hodnota je niektora z validnych URIs pre SignatureMethod
