@@ -40,7 +40,28 @@
 
 =============================
 
-2.4.2) Kanonikalizacia elementu ds:SignedInfo pomocou bcCrypto
-2.4.3) Z ds:KeyInfo => ds:X509Data => ds:X509Certificate pomocou bcCrypto ziskam PublicKey certifikatu
-2.4.4) Pomocou PublicKey zakodujem RSAckom kanonikalizovanu formu ds:SignedInfo
-2.4.5) Vysledok == hodnota v ds:SignatureValue - inak FAIL
+2.4.1) v ds:Signature existuje element ds:KeyInfo a ten ma atribut Id
+    2.4.2.1) v ds:Signature existuje element ds:SignatureProperties a ma atribut Id
+    2.4.2.2) obsahuje 2 podelementy s nazvom ds:SignatureProperty, ktore maju atribut Target
+        2.4.2.2.1) atribut Target musi byt UID, ktore je odkaz na element ds:Signature
+    2.4.2.3) element SignatureProperty moze obsahovat podelement:
+        - xzep:SignatureVersion - REQUIRED, UNIQUE
+        - xzep:ProductInfos - REQUIRED, UIQUE
+        (v jednom z nich musi byt jeden, v druhom druhy)
+    2.4.3.1) obsahuje element ds:X509Data
+        2.4.3.1.1) obsahuje podelementy:
+            - ds:X509Certificate
+            - ds:X509IssuerSerial
+            - ds:X509SubjectName
+    2.4.4.1) Pomocou bcCrypto vytiahnem z elementu ds:X509Certificate:
+        - IssuerCertificate
+        - SubjectName
+    2.4.4.2) Hodnoty elementov porovnam s ds:X509IssuerSerial & ds:X509SubjectName
+2.4.5) Kanonikalizacia elementu ds:SignedInfo pomocou bcCrypto
+2.4.6) Z ds:KeyInfo => ds:X509Data => ds:X509Certificate pomocou bcCrypto ziskam PublicKey certifikatu
+2.4.7) Pomocou PublicKey zakodujem RSAckom kanonikalizovanu formu ds:SignedInfo
+2.4.8) Vysledok == hodnota v ds:SignatureValue - inak FAIL
+
+=============================
+
+2.5) foreach ds:Manifest in LAST ds:Object in ds:Signature
