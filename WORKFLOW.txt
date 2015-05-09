@@ -78,7 +78,14 @@
         2.5.2.2) ma podelementy ds:Transforms & ds:DigestMethod
         2.5.2.3) ds:Transforms ma podelement ds:Transform
         2.5.2.4) ds:Transform ma atribut Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"
-        2.5.2.5) ds:DigestMethod ma atribut Algorithm a jeho hodnota je niektora z validnych URIs pre SignatureMethod
+        2.5.2.5) ds:DigestMethod ma atribut Algorithm a jeho hodnota je niektora z nasledujucich:
+        [
+            "http://www.w3.org/2000/09/xmldsig#sha1",
+            "http://www.w3.org/2001/04/xmldsig-more#sha224",
+            "http://www.w3.org/2001/04/xmlenc#sha256",
+            "http://www.w3.org/2001/04/xmldsig-more#sha384",
+            "http://www.w3.org/2001/04/xmlenc#sha512"
+        ]
     2.5.3) najdem element na ktory ukazuje podelement ds:Reference
     2.5.4) kanonikalizujem ho a vypocitam jeho hash pomocu algoritmu v ds:DigestMethod
     2.5.5) vysledok == ds:DigestValue - inak FAIL
