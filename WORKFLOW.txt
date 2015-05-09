@@ -26,7 +26,14 @@
     2.3.1) Maju podelementy ds:Transforms & ds:DigestMethod
     2.3.2) ds:Transforms ma podelement ds:Transform
     2.3.3) ds:Transform ma atribut Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"
-    2.3.4) ds:DigestMethod ma atribut Algorithm a jeho hodnota je niektora z validnych URIs pre SignatureMethod
+    2.3.4) ds:DigestMethod ma atribut Algorithm a jeho hodnota je niektora z nasledujucich:
+        [
+            "http://www.w3.org/2000/09/xmldsig#sha1",
+            "http://www.w3.org/2001/04/xmldsig-more#sha224",
+            "http://www.w3.org/2001/04/xmlenc#sha256",
+            "http://www.w3.org/2001/04/xmldsig-more#sha384",
+            "http://www.w3.org/2001/04/xmlenc#sha512"
+        ]
         2.3.5.1) Ak URI zacina s "#", overit, ze element existuje v XML, inak ziskat jeho hodnotu a validovat, ze je to XML
         2.3.5.2) Element, na ktory ukazuje URI moze byt:
             - 1x ds:KeyInfo - REQUIRED
@@ -57,9 +64,9 @@
         - IssuerCertificate
         - SubjectName
     2.4.4.2) Hodnoty elementov porovnam s ds:X509IssuerSerial & ds:X509SubjectName
-2.4.5) Kanonikalizacia elementu ds:SignedInfo pomocou bcCrypto
+2.4.5) Kanonikalizacia elementu ds:SignedInfo a zahashovanie algoritmom z ds:DigestMethod pomocou bcCrypto
 2.4.6) Z ds:KeyInfo => ds:X509Data => ds:X509Certificate pomocou bcCrypto ziskam PublicKey certifikatu
-2.4.7) Pomocou PublicKey zakodujem RSAckom kanonikalizovanu formu ds:SignedInfo
+2.4.7) Pomocou PublicKey zakodujem RSAckom zahashovanu formu ds:SignedInfo
 2.4.8) Vysledok == hodnota v ds:SignatureValue - inak FAIL
 
 =============================
@@ -72,3 +79,23 @@
         2.5.2.3) ds:Transforms ma podelement ds:Transform
         2.5.2.4) ds:Transform ma atribut Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"
         2.5.2.5) ds:DigestMethod ma atribut Algorithm a jeho hodnota je niektora z validnych URIs pre SignatureMethod
+    2.5.3) najdem element na ktory ukazuje podelement ds:Reference
+    2.5.4) kanonikalizujem ho a vypocitam jeho hash pomocu algoritmu v ds:DigestMethod
+    2.5.5) vysledok == ds:DigestValue - inak FAIL
+
+=============================
+
+3.1) Ziskam aktualny cas pomocu UTCnow()
+3.2) Ziskam hodnotou casovej peciatky z: xades:UnsignedProperties => xades:UnsignedSignatureProperties => xades:SignatureTimeStamp => xades:EncapsulatedTimeStamp
+3.3) pomocou bcCrypto ziskam z casovej peciatky koniec jej platnosti a zistim, ci je > ako aktualny cas - inak FAIL
+3.4) Pomocou bcCrypto ziskam z casovej peciatky cas jej vytvorenia
+3.5) Pomocou bcCrypto vytiahnem z elementu ds:X509Certificate jeho platnost OD a DO
+3.6) Zistim, ci cas vytvorenia peciatky spada do tohto intervalu - inak FAIL
+    3.7.1) Z URL http://test.monex.sk/DTCCACrl/DTCCACrl.crl ziskam aktualne CRL
+    3.7.2) Pomocou bcCrypto citam po riadkoch z CRL a vytahujem SN (serialNumber)
+    3.7.3) foreach zaznam z CRL => ak SN == certificate number - FAIL
+    3.8.1) pomocou bcCrypto vytiahnem z TimeStampu MessageImprint
+    3.8.2) MessageImprint == SignatureValue - inak FAIL
+
+=============================
+
