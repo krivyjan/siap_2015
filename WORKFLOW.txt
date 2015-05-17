@@ -1,4 +1,4 @@
-
+#kontrola signatureValue
 1.1) Korenovy element = xzep:DataEnvelope
 1.2) Obsahuje atributy xmlns:xzep & xmlns:ds
 1.3) Obsahuje podelement ds:Signature, ktory ma atributy Id & xmlns:ds
@@ -56,7 +56,7 @@
         - xzep:ProductInfos - REQUIRED, UIQUE
         (v jednom z nich musi byt jeden, v druhom druhy)
     2.4.3.1) obsahuje element ds:X509Data
-        2.4.3.1.1) obsahuje podelementy:
+        2.4.3.1.1) obsahuje podelementy
             - ds:X509Certificate
             - ds:X509IssuerSerial
             - ds:X509SubjectName
@@ -111,3 +111,6 @@
 4.3) Z URL http://test.monex.sk/DTCCACrl/DTCCACrl.crl ziskam aktualne CRL
 4.4) Pomocou bcCrypto citam po riadkoch z CRL a vytahujem SN (serialNumber)
 4.5) foreach zaznam z CRL => ak SN == certificate number (casovej peciatky) - FAIL
+
+
+#overenie obsahu keyinfo
