@@ -2,6 +2,8 @@
 __author__ = 'Ján Krivý'
 
 from xml.dom.minidom import parse
+from subprocess import check_output
+import rsa
 #from xml.dom.ext import c14n
 from lxml import etree
 import hashlib
@@ -331,25 +333,50 @@ for file in xml_files:
         #ds:X509IssuerSerial
         #ds:X509SubjectName
         certificate = get_child('ds:X509Certificate',x509data)
-        issuerSerial = get_child('ds:X509IssuerSerial',x509data)
-        subjectName = get_child('ds:X509SubjectName',x509data)
-        #print certificate
-        #print issuerSerial
-        #print subjectName
         #print certificate.firstChild.nodeValue
+        issuerSerial = get_child('ds:X509IssuerSerial',x509data)
+        issuerName = get_child('ds:X509IssuerName',issuerSerial)
 
-        #Pomocou bcCrypto vytiahnem z elementu ds:X509Certificate: IssuerCertificate  a SubjectName a porovnam s hodnotami vyssie
+        serialNumber = get_child('ds:X509SerialNumber',issuerSerial)
+        #print serialNumber.firstChild.nodeValue
+        subjectName = get_child('ds:X509SubjectName',x509data)
+        command = "java -jar BcCryptoParser.jar 0 " + str(certificate.firstChild.nodeValue)
+        result = check_output(command, shell=True)
+
+        result = result.split('\r\n')
+        issuerName = issuerName.firstChild.nodeValue.split(', ')
+
+        for item in result[2].split(','):
+            a = item.replace('ST=','S=')
+            b = issuerName.pop()
+            if not a == b:
+                raise endException('Nezhoduju sa issuerName z certifikatu a dokumentu ')
+
+        if not result[1] == serialNumber.firstChild.nodeValue:
+            raise endException('Nezhoduju sa serialNumber certifikatu')
+
+        if not result[0] == subjectName.firstChild.nodeValue:
+            raise endException('Nezhoduju sa subjectname certifikatu')
+
+        public_key = result[3]
 
         alg = get_attr(signatureMethod,'Algorithm').value.split('#')[-1].split('-')
         #print alg
 
         signedInfo_hash = get_hash(signedInfo,alg[1],'c14n')
-        #print signedInfo_hash
-
+        print signedInfo_hash
+        print public_key
+        file = open('key.der', 'w')
+        file.write(public_key)
+        file.close()
+        pub_key = rsa.PublicKey._load_pkcs1_der('key.der')
+        print pub_key
+        #crypto = rsa.encrypt(signedInfo_hash, public_key)
+        #print signatureValue
+        #print crypto
         #ziskanie public key
         #rsa signedInfo_hash
         #porovnanie s SignatureValue
-
 
 
         #2.5
