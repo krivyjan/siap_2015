@@ -364,13 +364,7 @@ for file in xml_files:
         #print alg
 
         signedInfo_hash = get_hash(signedInfo,alg[1],'c14n')
-        print signedInfo_hash
-        print public_key
-        file = open('key.der', 'w')
-        file.write(public_key)
-        file.close()
-        pub_key = rsa.PublicKey._load_pkcs1_der('key.der')
-        print pub_key
+
         #crypto = rsa.encrypt(signedInfo_hash, public_key)
         #print signatureValue
         #print crypto
@@ -417,14 +411,25 @@ for file in xml_files:
         unsignedsignatureProp = get_child('xades:UnsignedSignatureProperties',unsignedProp)
         signTimeStamp = get_child('xades:SignatureTimeStamp',unsignedsignatureProp)
         encapsulatedTimeStamp = get_child('xades:EncapsulatedTimeStamp',signTimeStamp)
-        #print encapsulatedTimeStamp
-
-            #xades:UnsignedProperties => xades:UnsignedSignatureProperties =>xades:SignatureTimeStamp => xades:EncapsulatedTimeStamp
-            #potrebujem zaciatok a koniec casovej peciatky
-            #MessageImprint == SignatureValue
+        #print encapsulatedTimeStamp.firstChild.nodeValue
+        #print signatureValue.firstChild.nodeValue
+        command = "java -jar BcCryptoParser.jar 1 " + str(encapsulatedTimeStamp.firstChild.nodeValue) + ' ' +str(signatureValue.firstChild.nodeValue)
+        #print command
+        result = check_output(command, shell=True)
+        result = result.split('\r\n')
+        if not result[0] == 'true':
+            msg = 'problem v 3 kroku: ' + str(result)
+            raise endException(msg)
 
 
         #4
+        command = "java -jar BcCryptoParser.jar 2 " + str(encapsulatedTimeStamp.firstChild.nodeValue) + ' ' + str(certificate.firstChild.nodeValue)
+        #print command
+        result = check_output(command, shell=True)
+        result = result.split('\r\n')
+        if not result[0] == 'true':
+            msg = 'problem v 4 kroku: ' + str(result)
+            raise endException(msg)
 
     except endException as exc:
         print exc
